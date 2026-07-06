@@ -3446,43 +3446,51 @@ function showCenteredBigToast(message, duration = 2000) {
         // ============================================================
         let deferredPrompt;
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            console.log('✅ PWA installation prompt available');
-        });
-
-        window.installPWA = function() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('✅ User accepted the PWA install');
-                        showToast('✅ تم تثبيت التطبيق بنجاح!');
-                    } else {
-                        console.log('❌ User dismissed the PWA install');
-                        showToast('❌ تم إلغاء التثبيت');
-                    }
-                    deferredPrompt = null;
-                });
+        Window.installPWA = function() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('✅ User accepted the PWA install');
+                showToast('✅ تم تثبيت التطبيق بنجاح!');
             } else {
-                showToast('📱 استخدم قائمة المتصفح لتثبيت التطبيق (انظر التعليمات أدناه)', 4000);
+                console.log('❌ User dismissed the PWA install');
+                showToast('❌ تم إلغاء التثبيت');
             }
-        };
-
-        // ربط زر التثبيت
-        document.addEventListener('click', function(e) {
-            if (e.target && e.target.id === 'installPwaBtn') {
-                window.installPWA();
-            }
+            deferredPrompt = null;
         });
+    } else {
+        showToast('📱 استخدم قائمة المتصفح لتثبيت التطبيق (انظر التعليمات أدناه)', 4000);
+    }
+};
 
-        // تسجيل الـ Service Worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(() => console.log('✅ Service Worker registered'))
-                .catch(err => console.error('❌ Service Worker registration failed:', err));
-        }
+// ربط زر التثبيت
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'installPwaBtn') {
+        window.installPWA();
+    }
+});
+
+// ==========================================
+// التعديل هنا: إضافة اسم المستودع للمسار
+// ==========================================
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/Sharia-exams-/sw.js')
+        .then(() => console.log('✅ Service Worker registered successfully'))
+        .catch(err => console.error('❌ Service Worker registration failed:', err));
+}
+
+// ============================================================
+// 7. ربط الأحداث بعد تحميل الصفحة
+// ============================================================
+window.addEventListener('load', function() {
+    // عرض رسالة ترحيب
+    setTimeout(function() {
+        showToast('لو محتاج حاجة فيه نموذج تحت السهم اسأله عن أي حاجة', 2000);
+    }, 1000);
+});
+
+console.log('✅ مشغلات الفيديو جاهزة للتهيئة.');
 
         // ============================================================
         // 7. ربط الأحداث بعد تحميل الصفحة
