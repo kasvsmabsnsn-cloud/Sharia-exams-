@@ -1,9 +1,9 @@
 const CACHE_NAME = 'academy-v1';
+// تعديل المسارات لتتوافق مع مسار GitHub Pages الفرعي
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  // أضف أي ملفات CSS أو JS إضافية هنا
+  '/Sharia-exams-/',
+  '/Sharia-exams-/index.html',
+  '/Sharia-exams-/manifest.json'
 ];
 
 // تثبيت الـ Service Worker
@@ -11,6 +11,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
+      .then(() => self.skipWaiting()) // إجبار الـ SW الجديد على التفعيل فوراً
   );
 });
 
@@ -18,11 +19,14 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
-      .then(response => response || fetch(event.request))
+      .then(response => {
+        // إذا وجد الملف في الكاش يعود به، وإلا يطلبه من الشبكة
+        return response || fetch(event.request);
+      })
   );
 });
 
-// تحديث الـ Service Worker
+// تحديث الـ Service Worker وحذف الكاش القديم
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -33,6 +37,6 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim()) // السيطرة على الصفحات المفتوحة فوراً
   );
 });
