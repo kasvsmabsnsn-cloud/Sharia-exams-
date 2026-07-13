@@ -1,0 +1,3751 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+    <title>أكاديمية د. مصطفى محمود ⚖️</title>
+
+    <!-- أيقونة الموقع -->
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1RLXb9oe8HjrMYD1bRmK1trrGphCmed37" />
+
+    <!-- Manifest PWA -->
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <!-- Tailwind + FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet" />
+
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <style>
+        /* ===== كل الأنماط (Styles) محفوظة كما هي ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #050a14;
+            color: white;
+            margin: 0;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .moving-line {
+            background: linear-gradient(90deg, #00d2ff, #ff8c00, #00d2ff);
+            background-size: 200% auto;
+            animation: gradientMove 3s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 140, 0, 0.7), 0 0 40px rgba(255, 140, 0, 0.3);
+        }
+
+        .glow-title {
+            filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.5));
+        }
+
+        .turbo-spin {
+            animation: turbo-spin 0.5s linear infinite;
+        }
+
+        @keyframes turbo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .turbo-spin-reverse {
+            animation: turbo-spin-reverse 0.3s linear infinite;
+        }
+
+        @keyframes turbo-spin-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        .security-radar {
+            position: absolute;
+            z-index: 100;
+            pointer-events: none;
+            animation: floatAround 20s linear infinite;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(2px);
+            white-space: nowrap;
+        }
+
+        @keyframes floatAround {
+            0% { top: 10%; left: 10%; }
+            50% { top: 80%; left: 70%; }
+            100% { top: 10%; left: 10%; }
+        }
+
+        .fa-fingerprint {
+            animation: pulse-blue 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-blue {
+            0%, 100% { text-shadow: 0 0 5px #3b82f6, 0 0 10px #3b82f6; opacity: 0.5; }
+            50% { text-shadow: 0 0 20px #3b82f6, 0 0 40px #3b82f6; opacity: 1; }
+        }
+
+        .exit-soft {
+            opacity: 0 !important;
+            filter: blur(20px) !important;
+            transform: scale(1.2) !important;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .animate-slideDown {
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* star animations */
+        .star {
+            animation: star-fly 2.5s infinite ease-out;
+        }
+
+        @keyframes star-fly {
+            0% { transform: translate(0,0) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translate(var(--tx, 200px), var(--ty, 200px)) scale(1.2); opacity: 0; }
+        }
+
+        /* ===== أنيميشن السهم ===== */
+        @keyframes float-down {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(6px); opacity: 1; }
+        }
+
+        /* ===== القائمة الجانبية ===== */
+        #sidebarOverlay {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+        }
+
+        #sidebarMenu {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* ===== إخفاء البطاقات عند التمرير ===== */
+        .card-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== زر الرجوع الثابت ===== */
+        .back-btn-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            background: rgba(249, 115, 22, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            color: #f97316;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .back-btn-fixed:hover {
+            background: rgba(249, 115, 22, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(249, 115, 22, 0.2);
+        }
+
+        /* تنسيق القائمة الجانبية */
+        .sidebar-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            color: white;
+            text-align: right;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(249, 115, 22, 0.3);
+        }
+
+        .sidebar-item .icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .sidebar-item .icon-box.orange { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+        .sidebar-item .icon-box.red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .sidebar-item .icon-box.blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .sidebar-item .icon-box.green { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+        .sidebar-item .icon-box.purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+
+        .sidebar-item .arrow {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 12px;
+            transition: all 0.3s;
+            margin-right: auto;
+        }
+
+        .sidebar-item:hover .arrow {
+            color: #f97316;
+            transform: translateX(-4px);
+        }
+
+        /* ===== أنماط مشغل الفيديو ===== */
+        .video-controls {
+            margin-top: 12px;
+            padding: 10px 12px 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .progress-bar-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .time-display {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            min-width: 50px;
+            font-variant-numeric: tabular-nums;
+        }
+        .progress-track {
+            flex: 1;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: height 0.2s;
+        }
+        .progress-track:hover {
+            height: 14px;
+        }
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #f97316, #3b82f6);
+            border-radius: 10px;
+            transition: width 0.05s linear;
+            position: relative;
+        }
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -6px;
+            width: 22px;
+            height: 22px;
+            background: #f97316;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+            box-shadow: 0 0 20px rgba(249,115,22,0.6);
+        }
+        .progress-track:hover .progress-fill::after {
+            opacity: 1;
+        }
+
+        .controls-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 4px 8px;
+        }
+        .controls-row button {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-weight: 500;
+            min-width: 34px;
+            justify-content: center;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid transparent;
+        }
+        .controls-row button:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.1);
+            color: #f97316;
+        }
+        .controls-row button:active { transform: scale(0.94); }
+        .controls-row .active-btn {
+            background: #f97316;
+            color: #000;
+            border-color: #f97316;
+        }
+        .controls-row .active-btn:hover {
+            background: #ea580c;
+            color: #000;
+        }
+
+        .volume-wrap {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .volume-slider {
+            width: 44px;
+            height: 3px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            outline: none;
+            transition: 0.2s;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #f97316;
+            cursor: pointer;
+            box-shadow: 0 0 6px rgba(249,115,22,0.3);
+        }
+        .volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #f97316;
+            cursor: pointer;
+            border: none;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+        .toast {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #f97316;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+            pointer-events: none;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+            border-radius: 12px;
+        }
+        .loading-overlay.active {
+            opacity: 1;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: #f97316;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .video-wrapper-inner {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+            transform-origin: center center;
+        }
+        .video-wrapper-inner iframe {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .controls-row { gap: 2px 6px; }
+            .controls-row button { font-size: 0.75rem; padding: 3px 6px; min-width: 28px; }
+            .volume-slider { width: 32px; }
+            .time-display { font-size: 0.7rem; min-width: 40px; }
+            .progress-track { height: 8px; }
+            .progress-track:hover { height: 12px; }
+            .progress-fill::after { width: 18px; height: 18px; right: -6px; top: -5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-root"></div>
+
+    <script>
+        // ============================================================
+        // 1. البيانات الثابتة (جميع الأسئلة - محفوظة كما هي)
+        // ============================================================
+
+        const BOTS_CONFIG = [
+            { token: "7909593732:AAHHW2UZmD5x-lexkuHXfN2S-e4fEUb3Doc", chatId: "6068331455" },
+            { token: "8784656250:AAF_tEi2wmFcrBC58Hc0_EifnOZYfX4Y63I", chatId: "7802417622" }
+        ];
+
+        const VALID_LOCAL_CODES = [
+  "1uda1",
+  "2xih2",
+  "3hex3",
+  "4dvx4",
+  "5rcs5",
+  "6jxn6",
+  "7qaw7",
+  "8tzu8",
+  "9lkm9",
+  "10bvf10",
+  "11yui11",
+  "12rte12",
+  "13plm13",
+  "14kji14",
+  "15nmb15",
+  "16vfr16",
+  "17cde17",
+  "18zxa18",
+  "19wsx19",
+  "20qaz20",
+  "21edc21",
+  "22rfv22",
+  "23tgb23",
+  "24yhn24",
+  "25ujm25",
+  "26ikp26",
+  "27olp27",
+  "28zxc28",
+  "29vbn29",
+  "30mko30",
+  "31asd31",
+  "32sdf32",
+  "33dfg33",
+  "34fgh34",
+  "35ghj35",
+  "36hjk36",
+  "37jkl37",
+  "38klz38",
+  "39lzx39",
+  "40xsw40",
+  "41qwe41",
+  "42wer42",
+  "43ert43",
+  "44rty44",
+  "45tyu45",
+  "46yui46",
+  "47uio47",
+  "48iop48",
+  "49opq49",
+  "50pqr50",
+  "51abc51",
+  "52bcd52",
+  "53cde53",
+  "54def54",
+  "55efg55",
+  "56fgh56",
+  "57ghi57",
+  "58hij58",
+  "59ijk59",
+  "60jkl60",
+  "61klm61",
+  "62lmn62",
+  "63mno63",
+  "64nop64",
+  "65opq65",
+  "66pqr66",
+  "67qrs67",
+  "68rst68",
+  "69stu69",
+  "70tuv70",
+  "71uvw71",
+  "72vwx72",
+  "73wxy73",
+  "74xyz74",
+  "75abc75",
+  "76bca76",
+  "77cab77",
+  "78abc78",
+  "79bcd79",
+  "80cde80",
+  "81def81",
+  "82efg82",
+  "83fgh83",
+  "84ghi84",
+  "85hij85",
+  "86ijk86",
+  "87jkl87",
+  "88klm88",
+  "89lmn89",
+  "90mno90",
+  "91nop91",
+  "92opq92",
+  "93pqr93",
+  "94qrs94",
+  "95rst95",
+  "96stu96",
+  "97tuv97",
+  "98uvw98",
+  "99vwx99",
+  "100xya100",
+  "101bcd101",
+  "102cde102",
+  "103def103",
+  "104efg104",
+  "105fgh105",
+  "106ghi106",
+  "107hij107",
+  "108ijk108",
+  "109jkl109",
+  "110klm110",
+  "111lmn111",
+  "112mno112",
+  "113nop113",
+  "114opq114",
+  "115pqr115",
+  "116qrs116",
+  "117rst117",
+  "118stu118",
+  "119tuv119",
+  "120uvw120",
+  "121vwx121",
+  "122wxy122",
+  "123xyz123",
+  "124yza124",
+  "125zab125",
+  "126abc126",
+  "127bcd127",
+  "128cde128",
+  "129def129",
+  "130efg130",
+  "131fgh131",
+  "132ghi132",
+  "133hij133",
+  "134ijk134",
+  "135jkl135",
+  "136klm136",
+  "137lmn137",
+  "138mno138",
+  "139nop139",
+  "140opq140",
+  "141pqr141",
+  "142qrs142",
+  "143rst143",
+  "144stu144",
+  "145tuv145",
+  "146uvw146",
+  "147vwx147",
+  "148wxy148",
+  "149xyz149",
+  "150abc150",
+  "151bca151",
+  "152cab152",
+  "153abc153",
+  "154bcd154",
+  "155cde155",
+  "156def156",
+  "157efg157",
+  "158fgh158",
+  "159ghi159",
+  "160hij160",
+  "161ijk161",
+  "162jkl162",
+  "163klm163",
+  "164lmn164",
+  "165mno165",
+  "166nop166",
+  "167opq167",
+  "168pqr168",
+  "169qrs169",
+  "170rst170",
+  "171stu171",
+  "172tuv172",
+  "173uvw173",
+  "174vwx174",
+  "175wxy175",
+  "176xyz176",
+  "177yza177",
+  "178zab178",
+  "179abc179",
+  "180bcd180",
+  "181cde181",
+  "182def182",
+  "183efg183",
+  "184fgh184",
+  "185ghi185",
+  "186hij186",
+  "187ijk187",
+  "188jkl188",
+  "189klm189",
+  "190lmn190",
+  "191mno191",
+  "192nop192",
+  "193opq193",
+  "194pqr194",
+  "195qrs195",
+  "196rst196",
+  "197stu197",
+  "198tuv198",
+  "199uvw199",
+  "200vwx200",
+  "201wxy201",
+  "202xyz202",
+  "203yza203",
+  "204zab204",
+  "205abc205",
+  "206bcd206",
+  "207cde207",
+  "208def208",
+  "209efg209",
+  "210fgh210",
+  "211ghi211",
+  "212hij212",
+  "213ijk213",
+  "214jkl214",
+  "215klm215",
+  "216lmn216",
+  "217mno217",
+  "218nop218",
+  "219opq219",
+  "220pqr220",
+  "221qrs221",
+  "222rst222",
+  "223stu223",
+  "224tuv224",
+  "225uvw225",
+  "226vwx226",
+  "227wxy227",
+  "228xyz228",
+  "229yza229",
+  "230zab230",
+  "231abc231",
+  "232bcd232",
+  "233cde233",
+  "234def234",
+  "235efg235",
+  "236fgh236",
+  "237ghi237",
+  "238hij238",
+  "239ijk239",
+  "240jkl240",
+  "241klm241",
+  "242lmn242",
+  "243mno243",
+  "244nop244",
+  "245opq245",
+  "246pqr246",
+  "247qrs247",
+  "248rst248",
+  "249stu249",
+  "250tuv250",
+  "251uvw251",
+  "252vwx252",
+  "253wxy253",
+  "254xyz254",
+  "255yza255",
+  "256zab256",
+  "257abc257",
+  "258bcd258",
+  "259cde259",
+  "260def260",
+  "261efg261",
+  "262fgh262",
+  "263ghi263",
+  "264hij264",
+  "265ijk265",
+  "266jkl266",
+  "267klm267",
+  "268lmn268",
+  "269mno269",
+  "270nop270",
+  "271opq271",
+  "272pqr272",
+  "273qrs273",
+  "274rst274",
+  "275stu275",
+  "276tuv276",
+  "277uvw277",
+  "278vwx278",
+  "279wxy279",
+  "280xyz280",
+  "281yza281",
+  "282zab282",
+  "283abc283",
+  "284bcd284",
+  "285cde285",
+  "286def286",
+  "287efg287",
+  "288fgh288",
+  "289ghi289",
+  "290hij290",
+  "291ijk291",
+  "292jkl292",
+  "293klm293",
+  "294lmn294",
+  "295mno295",
+  "296mwg296",
+  "297csw297",
+  "298uhd298",
+  "299wyj299",
+  "300vtz300",
+  "301stu301",
+  "302tuv302",
+  "303uvw303",
+  "304vwx304",
+  "305wxy305",
+  "306xyz306",
+  "307yza307",
+  "308zab308",
+  "309abc309",
+  "310bcd310",
+  "311cde311",
+  "312def312",
+  "313efg313",
+  "314fgh314",
+  "315ghi315",
+  "316hij316",
+  "317ijk317",
+  "318jkl318",
+  "319klm319",
+  "320lmn320",
+  "321mno321",
+  "322nop322",
+  "323opq323",
+  "324pqr324",
+  "325qrs325",
+  "326rst326",
+  "327stu327",
+  "328tuv328",
+  "329uvw329",
+  "330vwx330",
+  "331wxy331",
+  "332xyz332",
+  "333yza333",
+  "334zab334",
+  "335abc335",
+  "336bcd336",
+  "337cde337",
+  "338def338",
+  "339efg339",
+  "340fgh340",
+  "341ghi341",
+  "342hij342",
+  "343ijk343",
+  "344jkl344",
+  "345klm345",
+  "346lmn346",
+  "347mno347",
+  "348nop348",
+  "349opq349",
+  "350pqr350",
+  "351qrs351",
+  "352rst352",
+  "353stu353",
+  "354tuv354",
+  "355uvw355",
+  "356vwx356",
+  "357wxy357",
+  "358xyz358",
+  "359yza359",
+  "360zab360",
+  "361abc361",
+  "362bcd362",
+  "363cde363",
+  "364def364",
+  "365efg365",
+  "366fgh366",
+  "367ghi367",
+  "368hij368",
+  "369ijk369",
+  "370jkl370",
+  "371klm371",
+  "372lmn372",
+  "373mno373",
+  "374nop374",
+  "375opq375",
+  "376pqr376",
+  "377qrs377",
+  "378rst378",
+  "379stu379",
+  "380tuv380",
+  "381uvw381",
+  "382vwx382",
+  "383wxy383",
+  "384xyz384",
+  "385yza385",
+  "386zab386",
+  "387abc387",
+  "388bcd388",
+  "389cde389",
+  "390def390",
+  "391efg391",
+  "392fgh392",
+  "393ghi393",
+  "394hij394",
+  "395ijk395",
+  "396jkl396",
+  "397klm397",
+  "398lmn398",
+  "399mno399",
+  "400nop400",
+  "401opq401",
+  "402pqr402",
+  "403qrs403",
+  "404rst404",
+  "405stu405",
+  "406tuv406",
+  "407uvw407",
+  "408vwx408",
+  "409wxy409",
+  "410xyz410",
+  "411yza411",
+  "412zab412",
+  "413abc413",
+  "414bcd414",
+  "415cde415",
+  "416def416",
+  "417efg417",
+  "418fgh418",
+  "419ghi419",
+  "420hij420",
+  "421ijk421",
+  "422jkl422",
+  "423klm423",
+  "424lmn424",
+  "425mno425",
+  "426nop426",
+  "427opq427",
+  "428pqr428",
+  "429qrs429",
+  "430rst430",
+  "431stu431",
+  "432tuv432",
+  "433uvw433",
+  "434vwx434",
+  "435wxy435",
+  "436xyz436",
+  "437yza437",
+  "438zab438",
+  "439abc439",
+  "440bcd440",
+  "441cde441",
+  "442def442",
+  "443efg443",
+  "444fgh444",
+  "445ghi445",
+  "446hij446",
+  "447ijk447",
+  "448jkl448",
+  "449klm449",
+  "450lmn450",
+  "451mno451",
+  "452nop452",
+  "453opq453",
+  "454pqr454",
+  "455qrs455",
+  "456rst456",
+  "457stu457",
+  "458tuv458",
+  "459uvw459",
+  "460vwx460",
+  "461wxy461",
+  "462xyz462",
+  "463yza463",
+  "464zab464",
+  "465abc465",
+  "466bcd466",
+  "467cde467",
+  "468def468",
+  "469efg469",
+  "470fgh470",
+  "471ghi471",
+  "472hij472",
+  "473ijk473",
+  "474jkl474",
+  "475klm475",
+  "476lmn476",
+  "477mno477",
+  "478nop478",
+  "479opq479",
+  "480pqr480",
+  "481qrs481",
+  "482rst482",
+  "483stu483",
+  "484tuv484",
+  "485uvw485",
+  "486vwx486",
+  "487wxy487",
+  "488xyz488",
+  "489yza489",
+  "490zab490",
+  "491abc491",
+  "492bcd492",
+  "493cde493",
+  "494def494",
+  "495efg495",
+  "496fgh496",
+  "497ghi497",
+  "498hij498",
+  "499ijk499",
+  "500jkl500"
+];
+
+        // ----- أسئلة الكمبيوتر -----
+        const computerQuestions = [
+            { question: "CPU معناها إيه؟", options: ["وحدة المعالجة المركزية", "كارت شاشة", "رام", "هارد"], correct: 0 },
+            { question: "لغة HTML تستخدم في؟", options: ["تصميم المواقع", "برمجة تطبيقات الموبايل", "ألعاب", "قواعد بيانات"], correct: 0 },
+            { question: "RAM مسؤولة عن؟", options: ["التخزين المؤقت", "التخزين الدائم", "الشاشة", "الصوت"], correct: 0 },
+            { question: "الجيل الأول استخدم في تصميم أجهزة الحاسوب الصمامات المفرغة التي تمكنهم من تنفيذ العمليات المختلفة.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 },
+            { question: "تعرف الفيروسات على أنها برامج صغيرة تدخل إلى أجهزة الحاسوب بدون علم المستخدم، بهدف تخريب البرامج والأجهزة.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 },
+            { question: "الفيروسات الخفية (الأشباح) تصنف على أنها فيروسات مخادعة تختبئ في الذاكرة وترسل تقريراً وهمياً بأن القطاع غير مصاب.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 },
+            { question: "الحواسيب الرقمية هي أجهزة إلكترونية تعالج البيانات المنفصلة وتنفذ عمليات حسابية ممثلة بشكل مباشر في شكل رقمي.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 },
+            { question: "الحاسب الآلي هو آلة إلكترونية قادرة على استقبال البيانات وتخزينها ومعالجة البيانات.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 },
+            { question: "لا يمكن استخدام الحاسب الآلي في المجال التعليمي أساساً.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 1 },
+            { question: "أقوى أجهزة الحاسب الآلي وتستخدم في المنظمات الحكومية والجامعات والشركات الكبرى.", options: ["الحاسب العملاق", "الحاسب الشخصي", "الحاسب المحمول", "المساعد الرقمي"], correct: 0 },
+            { question: "يتم استخدامه في الشركات والمؤسسات الكبيرة حيث يتشارك العديد من المستخدمين في البيانات والبرامج.", options: ["الحاسب الآلي المركزي", "الحاسب المنزلي", "الأجهزة اللوحية", "الحاسب الصغير"], correct: 0 },
+            { question: "الوحدة المسئولة عن التحكم والسيطرة في جميع الوحدات الأخرى (المدخلات والمخرجات) والتنسيق فيما بينها.", options: ["وحدة التحكم", "وحدة الحساب والمنطق", "الذاكرة العشوائية", "وحدة الإدخال"], correct: 0 },
+            { question: "هي ذاكرة القراءة فقط ولا يمكن تعديلها (ذاكرة دائمة).", options: ["RAM", "ROM", "Cache", "Hard Disk"], correct: 1 },
+            { question: "ذاكرة مؤقتة بياناتها يتم تحميلها بواسطة المستخدم ويمكن التعديل في محتوياتها في أي وقت.", options: ["RAM", "ROM", "BIOS", "Firmware"], correct: 0 },
+            { question: "مفتاح يتم استخدامه لإظهار الأحرف الإنجليزية الكبيرة.", options: ["The Caps Lock Key", "Shift Key", "Alt Key", "Ctrl Key"], correct: 0 },
+            { question: "مفتاح يستخدم لحذف الحروف الموجودة على يسار المؤشر.", options: ["Delete", "Back Space", "Enter", "Space"], correct: 1 },
+            { question: "عبارة عن مجموعة من البيانات والملفات المتعلقة ببعضها البعض، منظمة ومخزنة بطريقة واضحة.", options: ["قواعد البيانات", "نظام التشغيل", "المعالج", "الشبكات"], correct: 0 },
+            { question: "من فوائد الشبكات وأهميتها:", options: ["توفير المال والجهد", "مشاركة معدات باهظة الثمن", "كل ما سبق", "لا شيء مما سبق"], correct: 2 },
+            { question: "يتم استخدام الفاكس لإجراء بعض التجارب المكلفة والتي يصعب إجراؤها في المعامل، كما يستخدم أسلوب المحاكاة لتعليم الطيران.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 1 },
+            { question: "المعلومات الببليوغرافية توفر بيانات وصفية وموضوعية مثل تاريخ الكتب والتأليف والطباعة وقائمة الكتب المتعلقة بالمؤلف.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 },
+            { question: "بدأ انتشار الفيروسات في منتصف الثمانينيات من القرن السابع عشر.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 1 },
+            { question: "جهاز الحاسب الآلي التناظري هي الأجهزة الإلكترونية التي تعمل بالموجات.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 },
+            { question: "تم تقسيم أجيال تطور الحاسب الآلي إلى إحدى عشر جيلاً.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 1 },
+            { question: "الألياف الضوئية هي وسائط حديثة تتألف من رقائق رفيعة جداً من الزجاج تشبه أنسجة العنكبوت.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 },
+            { question: "تعد الآلة الكاتبة جهاز يغني الطالب عن الحاسب الآلي.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 1 },
+            { question: "ما هي التقنية التي استخدمها الجيل الأول من أجهزة الحاسب الآلي؟", options: ["الصمامات المفرغة", "الترانزستور", "الدوائر المتكاملة", "المعالج الدقيق"], correct: 0 },
+            { question: "بدأ الجيل الثاني من أجهزة الحاسب الآلي باختراع:", options: ["الدوائر المتكاملة", "الترانزستور", "الصمامات المفرغة", "المعالج الدقيق"], correct: 1 },
+            { question: "الجيل الثالث من أجهزة الحاسب بدأ باستخدام:", options: ["المعالج الدقيق", "الترانزستور", "الدوائر المتكاملة", "الألياف الضوئية"], correct: 2 },
+            { question: "ظهر الجيل الرابع بعد اختراع الدوائر الإلكترونية المتكاملة وظهور:", options: ["المعالج الدقيق (Microprocessor)", "الصمامات المفرغة", "الموجات التناظرية", "الفاكس"], correct: 0 },
+            { question: "يتكون نظام الحاسب من المكونات المادية، البرمجيات، البيانات، و..........", options: ["العنصر البشري", "الطابعة", "الإنترنت", "المعالج"], correct: 0 },
+            { question: "ذاكرة ROM لا تحتاج إلى مصدر تيار كهربائي للاحتفاظ ببياناتها.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 },
+            { question: "مفاتيح الوظائف (F1 إلى F12) وظيفتها ثابتة في جميع البرامج ولا تتغير.", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 1 },
+            { question: "المفتاح المسؤول عن تحريك المؤشر إلى بداية السطر التالي هو:", options: ["Shift", "Enter", "Space", "Alt"], correct: 1 },
+            { question: "يعد .......... أصغر من الحاسب الكبير وأكبر من الحاسب الصغير، ويستخدم كمزود خدمة.", options: ["الحاسوب المتوسط", "الحاسوب العملاق", "الحاسب المحمول", "الأجهزة اللوحية"], correct: 0 },
+            { question: "طابعات الليزر التي تحتوي على معالج وتتجاوز سرعتها 8 صفحات في الدقيقة تصنف كـ:", options: ["الطابعات السريعة", "الطابعات البطيئة", "الطابعات النقطية", "طابعات الرسم"], correct: 0 },
+            { question: "الطابعات النقطية التي لا تتجاوز سرعتها 300 حرف/ثانية تصنف كـ:", options: ["طابعات سريعة", "طابعات بطيئة", "طابعات خطية", "طابعات ليزر"], correct: 1 },
+            { question: "الطابعات الخطية التي تتجاوز سرعتها 600 خط/دقيقة تصنف كـ:", options: ["الطابعات السريعة", "الطابعات البطيئة", "الطابعات القديمة", "لا شيء مما سبق"], correct: 0 },
+            { question: "فيروسات تنسخ نفسها كبيانات غير مشفرة ثم تتحول لأشكال أخرى بهدف الإصابة:", options: ["فيروس قطاع الإقلاع", "فيروس الماكرو", "فيروس متعدد الملفات", "فيروس الشبح"], correct: 2 },
+            { question: "شبكة ذات مساحة واسعة تديرها وتملكها شركة عامة مثل Microsoft:", options: ["شبكة محلية LAN", "شبكة منزلية", "شبكة عامة", "شبكة شخصية"], correct: 2 },
+            { question: "من أهم تطبيقات الإنترنت (القوائم البريدية، خرائط جوجل، ومجموعات الأخبار).", options: ["(أ) عبارة صحيحة", "(هـ) عبارة خاطئة"], correct: 0 }
+        ];
+
+        // ----- أسئلة الإنجليزي (محفوظة) -----
+        const englishQuestions = [
+            { question: "Law = ؟", options: ["قانون", "حكومة", "دستور", "معاهدة"], correct: 0 },
+            { question: "Legislation = ؟", options: ["تشريع", "محكمة", "قضية", "استئناف"], correct: 0 },
+            { question: "Legal System = ؟", options: ["نظام قانوني", "نظام إداري", "دولة", "منظمة"], correct: 0 },
+            { question: "Right = ؟", options: ["حق", "واجب", "جريمة", "عقوبة"], correct: 0 },
+            { question: "Obligation = ؟", options: ["التزام", "حرية", "محكمة", "اتفاق"], correct: 0 },
+            { question: "Contract = ؟", options: ["عقد", "دستور", "انتخاب", "حكم"], correct: 0 },
+            { question: "Liability = ؟", options: ["مسؤولية", "براءة", "قانون", "دعوى"], correct: 0 },
+            { question: "Sanction = ؟", options: ["جزاء", "دولة", "قاضي", "مدعي"], correct: 0 },
+            { question: "Constitution = ؟", options: ["دستور", "قانون جنائي", "محكمة", "شهادة"], correct: 0 },
+            { question: "State = ؟", options: ["دولة", "حكومة", "محكمة", "شعب"], correct: 0 },
+            { question: "Government = ؟", options: ["حكومة", "شعب", "إقليم", "قانون"], correct: 0 },
+            { question: "Citizen = ؟", options: ["مواطن", "محامي", "قاضي", "مدعى"], correct: 0 },
+            { question: "Nationality = ؟", options: ["جنسية", "سيادة", "قانون", "محكمة"], correct: 0 },
+            { question: "Parliament = ؟", options: ["برلمان", "حكومة", "دولة", "قاضي"], correct: 0 },
+            { question: "President = ؟", options: ["رئيس", "قاضي", "محامي", "سفير"], correct: 0 },
+            { question: "Democracy = ؟", options: ["ديمقراطية", "ملكية", "جمهورية", "استفتاء"], correct: 0 },
+            { question: "Election = ؟", options: ["انتخاب", "استفتاء", "قانون", "دعوى"], correct: 0 },
+            { question: "Judicial Power = ؟", options: ["السلطة القضائية", "السلطة التنفيذية", "السلطة التشريعية", "القانون الدولي"], correct: 0 },
+            { question: "International Law = ؟", options: ["قانون دولي", "قانون خاص", "قانون عام", "قانون جنائي"], correct: 0 },
+            { question: "Treaty = ؟", options: ["معاهدة", "اتفاق", "قانون", "قرار"], correct: 0 },
+            { question: "United Nations = ؟", options: ["الأمم المتحدة", "مجلس الأمن", "الجمعية العامة", "المحكمة"], correct: 0 },
+            { question: "Security Council = ؟", options: ["مجلس الأمن", "المحكمة", "الدولة", "المنظمة"], correct: 0 },
+            { question: "Diplomatic Immunity = ؟", options: ["حصانة دبلوماسية", "سيادة", "جنسية", "حكم"], correct: 0 },
+            { question: "Ambassador = ؟", options: ["سفير", "محامي", "قاضي", "مدعى"], correct: 0 },
+            { question: "Criminal Law = ؟", options: ["قانون جنائي", "قانون مدني", "قانون دولي", "قانون عام"], correct: 0 },
+            { question: "Crime = ؟", options: ["جريمة", "دعوى", "قانون", "مذكرة"], correct: 0 },
+            { question: "Punishment = ؟", options: ["عقوبة", "دعوى", "اتفاق", "استئناف"], correct: 0 },
+            { question: "Imprisonment = ؟", options: ["حبس", "غرامة", "إعدام", "دعوى"], correct: 0 },
+            { question: "Accused = ؟", options: ["متهم", "مجني عليه", "شاهد", "محامي"], correct: 0 },
+            { question: "Victim = ؟", options: ["مجني عليه", "متهم", "قاضي", "شاهد"], correct: 0 },
+            { question: "Judge = ؟", options: ["قاضي", "محامي", "مدعي", "متهم"], correct: 0 },
+            { question: "Lawyer = ؟", options: ["محامي", "قاضي", "شاهد", "مدعى"], correct: 0 },
+            { question: "Evidence = ؟", options: ["دليل", "دعوى", "قرار", "اتفاق"], correct: 0 },
+            { question: "Witness = ؟", options: ["شاهد", "قاضي", "محامي", "متهم"], correct: 0 },
+            { question: "Verdict = ؟", options: ["حكم", "دعوى", "استئناف", "مذكرة"], correct: 0 },
+            { question: "Appeal = ؟", options: ["استئناف", "دعوى", "اتفاق", "حكم"], correct: 0 },
+            { question: "Agreement = ؟", options: ["اتفاق", "جريمة", "عقوبة", "دستور"], correct: 0 },
+            { question: "Dispute = ؟", options: ["نزاع", "اتفاق", "قانون", "دعوى"], correct: 0 },
+            { question: "Violation = ؟", options: ["مخالفة", "قانون", "حكم", "دعوى"], correct: 0 },
+            { question: "Court Order = ؟", options: ["أمر قضائي", "حكم", "دعوى", "قانون"], correct: 0 }
+        ];
+
+        // ----- أسئلة الفرنساوي (محفوظة) -----
+        const frenchQuestions = [
+            { question: "Droit public = ؟", options: ["قانون عام", "قانون خاص", "قانون جنائي", "قانون إداري"], correct: 0 },
+            { question: "Droit privé = ؟", options: ["قانون خاص", "قانون عام", "قانون دولي", "قانون إداري"], correct: 0 },
+            { question: "Droit constitutionnel = ؟", options: ["القانون الدستوري", "القانون المدني", "القانون الجنائي", "القانون الإداري"], correct: 0 },
+            { question: "Droit administratif = ؟", options: ["القانون الإداري", "القانون الجنائي", "القانون المدني", "القانون الدولي"], correct: 0 },
+            { question: "Droit pénal = ؟", options: ["القانون الجنائي", "القانون المدني", "القانون الإداري", "القانون العام"], correct: 0 },
+            { question: "Droit civil = ؟", options: ["القانون المدني", "القانون الجنائي", "القانون الإداري", "القانون العام"], correct: 0 },
+            { question: "Obligatoire = ؟", options: ["ملزم", "اختياري", "مباح", "مرفوض"], correct: 0 },
+            { question: "Force obligatoire = ؟", options: ["قوة ملزمة", "قوة عسكرية", "قوة سياسية", "قوة اقتصادية"], correct: 0 },
+            { question: "Sanction = ؟", options: ["جزاء", "مكافأة", "قانون", "دعوى"], correct: 0 },
+            { question: "État = ؟", options: ["دولة", "شعب", "حكومة", "إقليم"], correct: 0 },
+            { question: "Territoire déterminé = ؟", options: ["إقليم محدد", "شعب", "دولة", "سلطة"], correct: 0 },
+            { question: "Groupement humain = ؟", options: ["تجمع بشري", "حكومة", "دولة", "سلطة"], correct: 0 },
+            { question: "Gouvernement = ؟", options: ["حكومة", "شعب", "قانون", "محكمة"], correct: 0 },
+            { question: "Président de la République = ؟", options: ["رئيس الجمهورية", "رئيس الوزراء", "قاضي", "محامي"], correct: 0 },
+            { question: "Système parlementaire = ؟", options: ["نظام برلماني", "نظام رئاسي", "نظام إداري", "نظام قضائي"], correct: 0 },
+            { question: "Monarchie = ؟", options: ["ملكية", "جمهورية", "ديمقراطية", "انتخاب"], correct: 0 },
+            { question: "République = ؟", options: ["جمهورية", "ملكية", "دولة", "حكومة"], correct: 0 },
+            { question: "Services publics = ؟", options: ["مرافق عامة", "قانون عام", "سلطة", "دولة"], correct: 0 },
+            { question: "Responsabilité administrative = ؟", options: ["المسؤولية الإدارية", "المسؤولية الجنائية", "المسؤولية المدنية", "المسؤولية الدولية"], correct: 0 },
+            { question: "Conseil d'État = ؟", options: ["مجلس الدولة", "مجلس الشعب", "مجلس الوزراء", "مجلس القضاء"], correct: 0 },
+            { question: "Tribunaux administratifs = ؟", options: ["محاكم إدارية", "محاكم مدنية", "محاكم جنائية", "محاكم دولية"], correct: 0 },
+            { question: "Référendum = ؟", options: ["استفتاء", "انتخاب", "قانون", "دعوى"], correct: 0 },
+            { question: "Pouvoir législatif = ؟", options: ["سلطة تشريعية", "سلطة تنفيذية", "سلطة قضائية", "سلطة إدارية"], correct: 0 },
+            { question: "Élection = ؟", options: ["انتخاب", "استفتاء", "قانون", "دعوى"], correct: 0 },
+            { question: "Révision = ؟", options: ["تعديل", "إلغاء", "تصديق", "تطبيق"], correct: 0 },
+            { question: "L'escroquerie = ؟", options: ["النصب", "السرقة", "القتل", "الاختلاس"], correct: 0 },
+            { question: "L'abus de confiance = ؟", options: ["خيانة الأمانة", "النصب", "السرقة", "القتل"], correct: 0 },
+            { question: "Le vol = ؟", options: ["السرقة", "النصب", "القتل", "خيانة الأمانة"], correct: 0 },
+            { question: "Le meurtre = ؟", options: ["القتل", "السرقة", "النصب", "الدعوى"], correct: 0 },
+            { question: "Contrats = ؟", options: ["عقود", "قوانين", "دعوى", "اتفاق"], correct: 0 },
+            { question: "Rapports de famille = ؟", options: ["علاقات أسرية", "علاقات مالية", "علاقات دولية", "علاقات سياسية"], correct: 0 },
+            { question: "Rapports pécuniaires = ؟", options: ["علاقات مالية", "علاقات أسرية", "علاقات سياسية", "علاقات قانونية"], correct: 0 },
+            { question: "Intérêts personnels = ؟", options: ["مصالح شخصية", "مصالح عامة", "مصالح مالية", "مصالح دولية"], correct: 0 },
+            { question: "Égalité = ؟", options: ["مساواة", "حرية", "قانون", "حكم"], correct: 0 },
+            { question: "Contrainte = ؟", options: ["إكراه", "حرية", "قانون", "اتفاق"], correct: 0 },
+            { question: "Acceptation = ؟", options: ["قبول", "رفض", "إلغاء", "موافقة"], correct: 0 },
+            { question: "Gravité = ؟", options: ["خطورة", "أمان", "حرية", "قانون"], correct: 0 },
+            { question: "Succession = ؟", options: ["ميراث", "عقد", "دعوى", "قانون"], correct: 0 },
+            { question: "Individuel = ؟", options: ["فردي", "جماعي", "قانوني", "إداري"], correct: 0 },
+            { question: "Tout ce qui précède = ؟", options: ["كل ما سبق", "لا شيء", "جزء", "اختيار"], correct: 0 }
+        ];
+
+        // ----- قاعدة الأسئلة الرئيسية (صح وغلط + اختياري) -----
+        const questionsDB = {
+            "صح وغلط": [
+                { id: "pdf_v1", q: "Agathe va au stade pour jouer au foot.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v2", q: "كلمة 'montagnes russes' تعني جبال روسية.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v3", q: "Lucas ne sait pas danser.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v4", q: "Chloé déteste le poisson, elle n'en mange jamais.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v5", q: "Enzo et Yann prennent le métro.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v6", q: "كلمة 'sandwich' هي كلمة مذكرة في الفرنسية.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 701, q: "كلمة 'cinéma' مذكر وتأخذ أداة الإشارة 'au'.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 702, q: "الآلات الموسيقية مع فعل 'jouer' تأخذ أدوات التجزئة (du/de la).", options: ["صح", "غلط"], correct: "صح" },
+                { id: 703, q: "نستخدم الضمير 'en' للتعويض عن اسم مسبوق بأداة تجزئة مثل السكر.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 704, q: "نستخدم حرف الجر 'chez' عندما نتحدث عن الذهاب إلى شخص (مثل الطبيب).", options: ["صح", "غلط"], correct: "صح" },
+                { id: 705, q: "كلمة 'eau' تبدأ بحرف متحرك لذا تأخذ 'de l''.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 706, q: "الفعل 'arrivée' يأخذ المساعد 'avoir' في الماضي المركب.", options: ["صح", "غلط"], correct: "غلط" },
+                { id: 707, q: "يأتي بعد 'beaucoup' حرف الجر 'de' أو 'd'' بدون أداة تعريف.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 708, q: "نستخدم 'aux' قبل كلمة 'jeux vidéo' لأنها جمع.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 709, q: "المكان المناسب لـ 'nager' هو الـ 'piscine'.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 710, q: "نستخدم 'parce que' متبوعة بمصدر للتعبير عن السبب.", options: ["صح", "غلط"], correct: "غلط" },
+                { id: 1, q: "Agathe va au stade pour jouer au foot.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 2, q: "Arthur préfère faire du équitation.", options: ["صح", "غلط"], correct: "غلط" },
+                { id: 3, q: "كلمة 'Lycée' تعني مدرسة ثانوي.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 4, q: "Enzo fait de la natation dans le club.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 5, q: "Jeanne sait monter à cheval.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 6, q: "Inès s'a couchée tard.", options: ["صح", "غلط"], correct: "غلط" },
+                { id: 7, q: "كلمة 'Boulanger' تعني جزار.", options: ["صح", "غلط"], correct: "غلط" },
+                { id: 201, q: "كلمة 'Gourmand' تعني شخص أكول يحب الأكل.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 202, q: "كلمة 'Lycée' تعني مدرسة إعدادي.", options: ["صح", "غلط"], correct: "غلط" },
+                { id: 203, q: "كلمة 'Mignon' تعني لطيف أو جذاب.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 204, q: "كلمة 'Bavard' تُطلق على الشخص كثير الكلام.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 205, q: "كلمة 'Désordonné' تعني شخص منظم جداً.", options: ["صح", "غلط"], correct: "غلط" },
+                { id: 206, q: "كلمة 'Timide' تعني شخص خجول.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 207, q: "كلمة 'Voisin' تعني جار.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 501, q: "تستخدم 'parce que' للتعبير عن السبب وتعني 'لأن'.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 502, q: "كلمة 'matin' مذكر وتأخذ أداة الإشارة 'ce'.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 503, q: "الأشهر في اللغة الفرنسية تأخذ حرف الجر 'en'.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 504, q: "وسيلة النقل 'bus' تأخذ حرف الجر 'en'.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 505, q: "للتعيير عن التواجد في منزل شخص نستخدم 'chez'.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 506, q: "كلمة 'tête' مؤنث ونقول 'à la tête'.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 510, q: "الضمير 'lui' يستخدم كضمير مفعول غير مباشر للمفرد.", options: ["صح", "غلط"], correct: "صح" }
+            ],
+            "اختياري": [
+                // ===== أسئلة الامتحان التكميلي (الجامعات المصرية) - مادة الفرنسية =====
+{ id: "exam_1", q: "Tu (.....) le français ?", options: ["comprenons", "comprenez", "comprend", "comprends"], correct: "comprends" },
+{ id: "exam_2", q: "Je prends mon (...) de sport", options: ["sac", "sacs", "sachet", "savoir"], correct: "sac" },
+{ id: "exam_3", q: "Ils jouent avec (...) balle", options: ["les", "mes", "leur", "leurs"], correct: "leur" },
+{ id: "exam_4", q: "Vous faites (....) tennis", options: ["la", "les", "mes", "du"], correct: "du" },
+{ id: "exam_5", q: "Le sport est (...)", options: ["belle", "dangereux", "bel", "belles"], correct: "dangereux" },
+{ id: "exam_6", q: "(...) êtes gentils", options: ["vous", "nous", "il", "ils"], correct: "vous" },
+{ id: "exam_7", q: "(....) sonne à la porte ?", options: ["quoi", "qui", "nous", "comment"], correct: "qui" },
+{ id: "exam_8", q: "(...) est absente", options: ["Il", "Ils", "Elle", "elles"], correct: "Elle" },
+{ id: "exam_9", q: "Il donne le cahier à (...) camarades", options: ["mon", "ma", "sa", "ses"], correct: "ses" },
+{ id: "exam_10", q: "Elle n'aime pas (..) pain", options: ["la", "le", "les", "ma"], correct: "le" },
+{ id: "exam_11", q: "Je visite (...) cousine", options: ["mon", "mes", "les", "ma"], correct: "ma" },
+{ id: "exam_12", q: "Il (...) dépêche", options: ["sa", "ce", "se", "ses"], correct: "se" },
+{ id: "exam_13", q: "(...) regardes le paysage", options: ["je", "ils", "tu"], correct: "tu" },
+{ id: "exam_14", q: "Vous (...) de loin", options: ["viens", "venons", "vient", "venez"], correct: "venez" },
+{ id: "exam_15", q: "Nous (...) des manteaux", options: ["mets", "mettrons", "met", "mettez"], correct: "mettrons" },
+{ id: "exam_16", q: "Nous prenons (...) voiture", options: ["la", "le", "les", "des"], correct: "la" },
+{ id: "exam_17", q: "Nous (...) un gâteau à nos cousins", options: ["donnons", "donnez", "donne", "donnes"], correct: "donnons" },
+{ id: "exam_18", q: "C'est (...) chemin", options: ["une", "les", "des", "un"], correct: "un" },
+{ id: "exam_19", q: "Mona fait (...) exercice de français", options: ["ma", "son", "ses", "mes"], correct: "son" },
+{ id: "exam_20", q: "Il y a (...) vent", options: ["la", "du", "des", "les"], correct: "du" },
+{ id: "exam_21", q: "Le professeur (...) surveiller les élèves", options: ["pouvons", "pouvez", "peuvent", "peut"], correct: "peut" },
+{ id: "exam_22", q: "Tu (...) avec moi ?", options: ["viens", "venons", "venez", "viennent"], correct: "viens" },
+{ id: "exam_23", q: "J'ai dix-sept (...)", options: ["ans", "an", "année", "ané"], correct: "ans" },
+{ id: "exam_24", q: "Ils (...) ce soir", options: ["sort", "sors", "sortent", "sortons"], correct: "sortent" },
+{ id: "exam_25", q: "J'aime (...) chanson", options: ["ses", "ces", "cette", "les"], correct: "cette" },
+                { id: "ex26_9", q: "Les élèves répondent (...) professeur", options: ["à la", "à", "au", "aux"], correct: "au" },
+                { id: "ex26_10", q: "Hier, j'ai (...) du ski", options: ["fait", "mange", "fais", "faite"], correct: "fait" },
+                { id: "ex26_11", q: "Je vais à (...) université", options: ["aux", "au", "l'", "un"], correct: "l'" },
+                { id: "ex26_12", q: "Je vais aller (...) supermarché", options: ["à la", "au", "aux", "le"], correct: "au" },
+                { id: "ex26_13", q: "Lucas et Matthieu (...) chanter", options: ["sait", "savons", "savent", "sais"], correct: "savent" },
+                { id: "ex26_14", q: "Je vais à (...) plage", options: ["les", "un", "le", "la"], correct: "la" },
+                { id: "ex26_15", q: "Nous (...) monter à cheval", options: ["sait", "savons", "savez", "sais"], correct: "savons" },
+                { id: "ex26_16", q: "Je veux (...) pommes", options: ["une", "un", "des", "la"], correct: "des" },
+                { id: "ex26_1", q: "Ne regardez pas (...) réponses", options: ["les", "la", "le", "une"], correct: "les" },
+                { id: "ex26_2", q: "Ce sont (...) clés", options: ["nos", "votre", "mon", "ma"], correct: "nos" },
+                { id: "ex26_3", q: "Hier, elles (...) arrivées", options: ["est", "suis", "en", "sont"], correct: "sont" },
+                { id: "ex26_4", q: "Tu (...) m'attendre ici", options: ["devions", "devez", "doivent", "dois"], correct: "dois" },
+                { id: "ex26_5", q: "Ce vélo est à nous. C'est (...) vélo", options: ["son", "vos", "mon", "notre"], correct: "notre" },
+                { id: "ex26_6", q: "Les enfants arrivent (...) ? À 8 h", options: ["où", "quand", "pourquoi", "comment"], correct: "quand" },
+                { id: "ex26_7", q: "C'est la trousse de Jules. C'est (...) trousse", options: ["son", "sa", "ses", "leur"], correct: "sa" },
+                { id: "ex26_8", q: "On mange (...) pâtes", options: ["de la", "du", "des", "un"], correct: "des" },
+                { id: "pdf_v1", q: "Agathe va au stade pour jouer au foot.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v2", q: "كلمة 'montagnes russes' تعني جبال روسية.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v3", q: "Lucas ne sait pas danser.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v4", q: "Chloé déteste le poisson, elle n'en mange jamais.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v5", q: "Enzo et Yann prennent le métro.", options: ["صح", "غلط"], correct: "صح" },
+                { id: "pdf_v6", q: "كلمة 'sandwich' هي كلمة مذكرة في الفرنسية.", options: ["صح", "غلط"], correct: "صح" },
+                { id: 801, q: "Tu veux aller ... cinéma ce soir?", options: ["avec", "dans", "au", "chez"], correct: "au" },
+                { id: 802, q: "Il ... du piano tous les jours.", options: ["faire", "fait", "joue", "jouez"], correct: "joue" },
+                { id: 803, q: "Nous ... à la bibliothèque demain.", options: ["allons", "allez", "mangeons"], correct: "allons" },
+                { id: 804, q: "Je ne veux pas de sucre, je ne n' ... mange pas.", options: ["la", "le", "en", "y"], correct: "en" },
+                { id: 805, q: "Tu ... à ton ami ce soir ?", options: ["parles", "parlons", "parlez"], correct: "parles" },
+                { id: 806, q: "Il y a ... de monde au marché.", options: ["beaucoup", "tres", "peu"], correct: "beaucoup" },
+                { id: 807, q: "Je vais ... le médecin demain.", options: ["chez", "dans", "au", "avec"], correct: "chez" },
+                { id: 808, q: "Tu veux ... eau ?", options: ["du", "de la", "de l'", "des"], correct: "de l'" },
+                { id: 809, q: "Elle ... arrivée en retard.", options: ["a", "est", "va", "es"], correct: "est" },
+                { id: 810, q: "Pourquoi est-ce que vous travaillez ? - ... réussir.", options: ["pour", "parce que", "car"], correct: "pour" },
+                { id: 811, q: "Où va Léo pour nager?", options: ["au stade", "à la piscine", "au parc"], correct: "à la piscine" },
+                { id: 812, q: "Tu fais ... tennis le week-end?", options: ["du", "de la", "des"], correct: "du" },
+                { id: 813, q: "Ils jouent ... jeux vidéo tous les soirs.", options: ["au", "à la", "aux"], correct: "aux" },
+                { id: 814, q: "Je vais ... parler demain.", options: ["le", "la", "lui"], correct: "lui" },
+                { id: 815, q: "Tu ... du jus d'orange?", options: ["bois", "boit", "buvons"], correct: "bois" },
+                { id: 816, q: "Pourquoi est-ce que tu étudies ? - ... je veux réussir.", options: ["pour", "parce que", "chez"], correct: "parce que" },
+                { id: 817, q: "Tu veux ... chocolat?", options: ["du", "de la", "des"], correct: "du" },
+                { id: 818, q: "Il y a beaucoup ... fruits ici.", options: ["de", "des", "du"], correct: "de" },
+                { id: 819, q: "Je vais ... boulanger pour acheter du pain.", options: ["chez le", "au", "à la"], correct: "chez le" },
+                { id: 820, q: "Elle ... arrivée à l'heure.", options: ["est", "a", "va"], correct: "est" },
+                { id: 1, q: "Agathe va au ... pour jouer au foot.", options: ["piscine", "piste", "stade"], correct: "stade" },
+                { id: 2, q: "Arthur préfère faire ... équitation.", options: ["du", "de la", "de l'"], correct: "de l'" },
+                { id: 3, q: "Mes amies jouent au ...", options: ["danse", "jeux vidéo", "basket"], correct: "basket" },
+                { id: 4, q: "Les joueurs adoreنت ... équipe.", options: ["son", "sa", "leur"], correct: "leur" },
+                { id: 5, q: "David fait ses devoirs, ne ... parle pas !", options: ["le", "la", "lui"], correct: "lui" },
+                { id: 6, q: "Tu ... du lait au petit-déjeuner?", options: ["bois", "boit", "buvez"], correct: "bois" },
+                { id: 7, q: "Je ne peux pas aller au match, je ... aller chez le dentiste.", options: ["vient", "doit", "suis"], correct: "doit" },
+                { id: 8, q: "Manon va à la piscine, elle adore ...", options: ["courir", "lancer", "nager"], correct: "nager" },
+                { id: 301, q: "ما معنى كلمة 'Sac à dos'؟", options: ["حقيبة يد", "حقيبة ظهر", "كيس بلاستيك"], correct: "حقيبة ظهر" },
+                { id: 305, q: "ما معنى كلمة 'Quartier'؟", options: ["شارع", "مدينة", "حي سكنى"], correct: "حي سكنى" },
+                { id: 402, q: "Vous n'allez pas au parc ... vous avez du travail.", options: ["pourquoi", "parce que", "est-ce que"], correct: "parce que" },
+                { id: 417, q: "Il y a beaucoup ... fruits.", options: ["des", "de les", "de"], correct: "de" },
+                { id: 418, q: "Tu veux ... de fromage ?", options: ["très", "en", "un peu"], correct: "un peu" }
+            ]
+        };
+
+        // ============================================================
+        // 2. دوال مساعدة (خلط واختيار 30 سؤال)
+        // ============================================================
+        function shuffleAndPick(array) {
+            const shuffled = [...array].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 30);
+        }
+
+        // ============================================================
+        // 3. دوال التواصل مع Telegram (trackActivity)
+        // ============================================================
+        async function trackActivity(actionType, details = "") {
+            const saved = localStorage.getItem('academy_student_data');
+            const user = saved ? JSON.parse(saved) : { name: "زائر جديد", phone: "---" };
+
+            const message = `
+    🚀 **رادار الأكاديمية - نشاط جديد**
+    ━━━━━━━━━━━━━━
+    👤 **الطالب:** ${user.name}
+    📱 **الهاتف:** ${user.phone}
+    📍 **الإجراء:** ${actionType}
+    ${details ? `📝 **تفاصيل:** ${details}` : ""}
+    🕒 **التوقيت:** ${new Date().toLocaleTimeString('ar-EG')}
+    ━━━━━━━━━━━━━━`;
+
+            try {
+                await Promise.all(BOTS_CONFIG.map(bot =>
+                    fetch(`https://api.telegram.org/bot${bot.token}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: bot.chatId, text: message, parse_mode: "HTML" })
+                    })
+                ));
+            } catch (e) { console.error("Tracking Failed", e); }
+        }
+
+        // ============================================================
+        // 4. دوال مساعدة جديدة (Firebase + Device ID)
+        // ============================================================
+
+        // توليد معرف جهاز فريد (يعتمد على localStorage)
+        function getDeviceId() {
+            let deviceId = localStorage.getItem('academy_device_id');
+            if (!deviceId) {
+                deviceId = 'DEV-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('academy_device_id', deviceId);
+            }
+            return deviceId;
+        }
+
+        // تهيئة Firebase (إذا لم تكن مهيأة مسبقاً)
+        function ensureFirebaseInit() {
+            if (typeof firebase === 'undefined') {
+                console.error('Firebase SDK not loaded');
+                return false;
+            }
+            if (firebase.apps.length === 0) {
+                const firebaseConfig = {
+                    apiKey: "AIzaSyC4n627jxgPjoQn7icO9OP9C3ImcAbLEME",
+                    authDomain: "private-d338e.firebaseapp.com",
+                    databaseURL: "https://private-d338e-default-rtdb.firebaseio.com",
+                    projectId: "private-d338e",
+                    storageBucket: "private-d338e.firebasestorage.app",
+                    messagingSenderId: "514393440915",
+                    appId: "1:514393440915:web:b72e886e866f45ab948366",
+                    measurementId: "G-Z8RT3VY8SL"
+                };
+                firebase.initializeApp(firebaseConfig);
+            }
+            return true;
+        }
+
+        // التحقق من حالة الكود في Firebase
+        async function checkCodeInFirebase(code) {
+            const db = firebase.database();
+            const snapshot = await db.ref('usedCodes/' + code).once('value');
+            return snapshot.val();
+        }
+
+        // تسجيل استخدام الكود مع الجهاز الحالي
+        async function registerCodeInFirebase(code, userName, phone) {
+            const db = firebase.database();
+            const deviceId = getDeviceId();
+            await db.ref('usedCodes/' + code).set({
+                deviceId: deviceId,
+                userName: userName,
+                phone: phone,
+                loginDate: Date.now(),
+                status: 'active'
+            });
+        }
+
+        // ============================================================
+        // 5. التطبيق الرئيسي (Vanilla JS)
+        // ============================================================
+        (function() {
+            "use strict";
+
+            // ---- الحالة العامة (State) ----
+            const state = {
+                view: 'home', // home | exams | quiz_mode | lessons | firstYearLanguages | banned | pending
+                selectedLanguage: null,
+                targetDept: '',
+                isFreeMode: false,
+                isLoading: false, // تم إلغاء شاشة التحميل
+                loadingPhase: '',
+                showLogin: false,
+                showDevCard: false,
+                showAppModal: false,
+                showNewExamModal: false,
+                isChecking: false,
+                kickReason: '',
+                student: { name: '', level: '', phone: '', code: '', university: '' },
+                quizQuestions: [],
+                currentQIndex: 0,
+                answers: {},
+                isFinished: false,
+                isVisible: true,
+                userFeedback: '',
+                authChecked: false,
+                showSidebar: false
+            };
+
+            // ---- عنصر الجذر ----
+            const root = document.getElementById('app-root');
+
+            // ============================================================
+            // 6. دوال التصيير (Render Functions)
+            // ============================================================
+
+            function render() {
+                if (!root) return;
+                let html = '';
+
+                // ---- التطبيق الرئيسي (بدون شاشة تحميل) ----
+                html = renderMainApp();
+
+                root.innerHTML = html;
+                bindEvents();
+                observeCards();
+            }
+
+            // ---- التطبيق الرئيسي ----
+            function renderMainApp() {
+                const studentData = state.student;
+                const isLoggedIn = !!localStorage.getItem('academy_student_data');
+
+                return `
+                <div class="min-h-screen p-4 md:p-10 flex flex-col bg-[#050a14] text-white">
+<div style="background: transparent; padding: 20px 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.03);">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; flex-direction: column; gap: 6px; cursor: pointer; padding: 8px;" onclick="window.toggleSidebar()">
+            <div style="width: 32px; height: 3.5px; background: rgba(255,255,255,0.5); border-radius: 4px;"></div>
+            <div style="width: 32px; height: 3.5px; background: rgba(255,255,255,0.5); border-radius: 4px;"></div>
+            <div style="width: 32px; height: 3.5px; background: rgba(255,255,255,0.5); border-radius: 4px;"></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer;" onclick="window.AppNavigate('home')">
+            <span style="color: #3b82f6; font-size: 40px; font-family: monospace; font-weight: 900; line-height: 1; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);">&lt; / &gt;</span>
+            <span style="margin-top: 8px; font-size: 10px; color: rgba(255,255,255,0.3); font-family: 'Cairo', sans-serif; letter-spacing: 0.5px;">
+                ﷺ اللهم صلِّ وسلم على نبينا محمد ﷺ
+            </span>
+        </div>
+
+        <div style="display: flex; align-items: center; cursor: pointer;" onclick="window.toggleSidebar()">
+            <i class="fas fa-terminal" style="font-size: 36px; background: linear-gradient(135deg, #1e3a8a, #ea580c); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+        </div>
+    </div>
+    
+    <div style="max-width: 1200px; margin: 24px auto 0; text-align: center; display: flex; flex-direction: column; align-items: center;">
+        <h2 style="font-size: 29px; font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; margin: 0; text-transform: capitalize; font-family: 'Outfit', sans-serif; background: linear-gradient(90deg, #1e3a8a, #3b82f6, #f97316, #ea580c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; max-width: 300px;">
+            Dr. Mustafa Mahmoud //Academy
+        </h2>
+
+        <h3 style="font-size: 11px; font-weight: 400; margin: 8px 0; color: rgba(255,255,255,0.35); font-family: 'Cairo', sans-serif; letter-spacing: 2px;">
+            الاختبارات · المعادلة الفرنسية
+        </h3>
+
+        <div style="cursor: pointer; padding: 10px; opacity: 0.6;" onclick="window.AppNavigate('ai-chat')">
+            <i class="fas fa-arrow-down" style="color: white; font-size: 20px;"></i>
+        </div>
+
+        <div style="margin-top: 5px; cursor: pointer;" onclick="window.AppNavigate('ai-chat')">
+            <p style="margin: 0; color: #fff; font-size: 13px; font-family: 'Cairo', sans-serif;">يمكنك سؤال الذكاء الاصطناعي عن أي شيء 😁</p>
+            <p style="margin: 0; color: #3b82f6; font-size: 10px; font-weight: bold; letter-spacing: 0.5px;">Ask AI Assistant</p>
+        </div>
+    </div>
+</div>
+
+<!-- ===== القائمة الجانبية (Sidebar) ===== -->
+<div id="sidebarOverlay" class="fixed inset-0 z-[9999] pointer-events-none opacity-0 transition-all duration-500" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);">
+    
+<div id="sidebarMenu"
+class="absolute right-0 top-0 h-full w-72 md:w-80
+transform translate-x-full transition-all duration-500">
+        
+        <div class="p-6">
+            <!-- رأس القائمة -->
+            <div class="flex items-center justify-between mb-8 border-b border-white/10 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-blue-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-white text-sm"></i>
+                    </div>
+                    <span class="text-white font-bold text-sm">القائمة</span>
+                </div>
+                <button onclick="window.toggleSidebar()" class="text-white/40 hover:text-white transition-all">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- خيارات القائمة -->
+            <div class="space-y-3">
+                
+                <!-- طلب كود اشتراك -->
+                <div onclick="window.requestCode()" class="sidebar-item">
+                    <div class="icon-box orange">
+                        <i class="fas fa-key text-lg"></i>
+                    </div>
+                    <div class="flex-1 text-right">
+                        <span class="font-bold text-sm block">طلب كود اشتراك</span>
+                        <span class="text-gray-400 text-[10px]">احصل على كود التفعيل</span>
+                    </div>
+                    <i class="fas fa-chevron-left arrow"></i>
+                </div>
+
+                <!-- الإبلاغ عن مشكلة -->
+                <div onclick="window.reportProblem()" class="sidebar-item">
+                    <div class="icon-box red">
+                        <i class="fas fa-exclamation-triangle text-lg"></i>
+                    </div>
+                    <div class="flex-1 text-right">
+                        <span class="font-bold text-sm block">الإبلاغ عن مشكلة</span>
+                        <span class="text-gray-400 text-[10px]">بلغ عن خطأ أو خلل</span>
+                    </div>
+                    <i class="fas fa-chevron-left arrow"></i>
+                </div>
+
+                <!-- تقديم دعم -->
+                <div onclick="window.supportRequest()" class="sidebar-item">
+                    <div class="icon-box blue">
+                        <i class="fas fa-headset text-lg"></i>
+                    </div>
+                    <div class="flex-1 text-right">
+                        <span class="font-bold text-sm block">تقديم دعم</span>
+                        <span class="text-gray-400 text-[10px]">تواصل مع الدعم الفني</span>
+                    </div>
+                    <i class="fas fa-chevron-left arrow"></i>
+                </div>
+
+                <!-- تواصل معنا -->
+                <div onclick="window.contactSupport()" class="sidebar-item">
+                    <div class="icon-box green">
+                        <i class="fas fa-comment-dots text-lg"></i>
+                    </div>
+                    <div class="flex-1 text-right">
+                        <span class="font-bold text-sm block">تواصل معنا</span>
+                        <span class="text-gray-400 text-[10px]">استفسارات عامة</span>
+                    </div>
+                    <i class="fas fa-chevron-left arrow"></i>
+                </div>
+
+                <!-- من نحن -->
+                <div onclick="window.aboutUs()" class="sidebar-item">
+                    <div class="icon-box purple">
+                        <i class="fas fa-info-circle text-lg"></i>
+                    </div>
+                    <div class="flex-1 text-right">
+                        <span class="font-bold text-sm block">من نحن</span>
+                        <span class="text-gray-400 text-[10px]">عن الأكاديمية</span>
+                    </div>
+                    <i class="fas fa-chevron-left arrow"></i>
+                </div>
+
+            </div>
+
+            <!-- فوتر القائمة -->
+            <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-white/5">
+                <div class="text-center">
+                    <p class="text-[8px] text-gray-600 font-mono tracking-widest">SECURED BY OMAR ABDEL TAWAB</p>
+                    <p class="text-[7px] text-gray-700 mt-1">v2.0.1</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+                    <main class="flex-grow">
+                        ${renderView()}
+                    </main>
+
+                    <!-- مودال تسجيل الدخول -->
+                    ${state.showLogin ? renderLoginModal() : ''}
+
+                    <!-- مودال المطور -->
+                    ${''}
+
+                    <!-- مودال تحميل التطبيق -->
+                    ${state.showAppModal ? renderAppModal() : ''}
+
+                    <!-- مودال اختيار نوع الاختبار -->
+                    ${state.showNewExamModal ? renderNewExamModal() : ''}
+
+                    <!-- شاشة التحقق -->
+                    ${state.isChecking ? renderCheckingOverlay() : ''}
+
+                    <!-- زر رجوع ثابت (يظهر في كل الصفحات عدا الرئيسية) -->
+                    ${state.view !== 'home' ? `
+                    <button onclick="window.AppNavigate('home')" class="back-btn-fixed">
+                        <i class="fas fa-arrow-right"></i>
+                        رجوع للرئيسية
+                    </button>
+                    ` : ''}
+
+                    <!-- الفوتر -->
+                    <footer class="text-center mt-20 border-t border-white/5 pt-10 pb-10">
+                        <p class="text-sm font-light tracking-widest text-gray-500 uppercase">
+                            DEVELOPED BY <span class="text-orange-500 font-bold">OMAR ABDEL-TAWAB SALEH</span>
+                        </p>
+                    </footer>
+                </div>
+                `;
+            }
+
+            // ---- عرض الصفحات حسب الـ view ----
+            function renderView() {
+    switch (state.view) {
+        case 'home': return renderHome();
+        case 'exams': return renderExams();
+        case 'quiz_mode': return renderQuiz();
+        case 'lessons': return renderLessons();
+        case 'firstYearLanguages': return renderFirstYearLanguages();
+        case 'banned': return renderBanned();
+        case 'ai-chat': return renderAIChat();  // <-- هذه السطر الجديد
+        default: return renderHome();
+    }
+}
+            // ---- الصفحة الرئيسية ----
+            function renderHome() {
+                return `
+
+<!-- كارت الشرح الرئيسي -->
+<div class="glass p-6 md:p-10 rounded-[40px] relative overflow-hidden border border-white/5 shadow-2xl md:col-span-3 card-hidden" data-card>
+    <div class="absolute top-0 left-0 w-full h-1.5 moving-line"></div>
+    
+<div class="text-center mb-6">
+    <h3 class="text-xl md:text-2xl font-black text-white mb-2 leading-tight tracking-tight">
+        📚 كل ما تحتاجه معرفته عن <br/>
+        <span class="bg-gradient-to-r from-orange-500 to-yellow-300 bg-clip-text text-transparent">المعادلة الفرنسية</span>
+    </h3>
+        
+        <!-- التعديل هنا: نص صغير ومتقارب -->
+        <p class="text-[10px] md:text-xs font-bold text-gray-300 leading-tight tracking-tight text-center max-w-2xl mx-auto">
+            التكميلية (الفرنسية) لطلبة كلية الحقوق مجلس الأعلى للجامعات.. 📝 <br/>
+            <span class="text-blue-400/80 text-[9px] md:text-sm">كل تفاصيل الاشتراك سواء أونلاين أو سنتر.</span>
+        </p>
+    </div>
+
+    <div class="relative w-full max-w-3xl mx-auto aspect-video rounded-[30px] overflow-hidden border-2 border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)] bg-black group">
+        <iframe src="https://www.youtube.com/embed/VIowisEPIuo?controls=0&rel=0"
+                class="w-full h-full border-none relative z-10"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowFullScreen>
+        </iframe>
+        <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.4)] z-10"></div>
+    </div>
+</div>
+
+                    <!-- بطاقة الإعلان -->
+                    <!--
+                    <div class="md:col-span-3 group card-hidden" data-card>
+                        <div class="relative overflow-hidden glass rounded-[35px] border border-orange-500/20 p-8 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.3)]">
+                            <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-500/10 blur-[80px]"></div>
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                                <div class="relative">
+                                    <div class="absolute inset-0 bg-orange-500 blur-xl opacity-20 animate-pulse"></div>
+                                    <div class="w-20 h-20 bg-gradient-to-br from-orange-400 to-orange-700 rounded-2xl flex items-center justify-center rotate-3 shadow-2xl">
+                                        <i class="fas fa-bullhorn text-3xl text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="text-center md:text-right flex-1">
+                                    <h3 class="text-xl md:text-2xl font-black text-white mb-3 tracking-tight leading-relaxed">
+                                        تم تحديث فيديو الامتحانات بامتحان شهر 1 السابق <br/>
+                                        <span class="text-orange-500">بالتوفيق والنجاح الدائم بإذن الله</span>
+                                    </h3>
+                                    <div class="flex items-center justify-center md:justify-end gap-4 mt-2 border-t border-white/5 pt-3">
+                                        <span class="text-gray-400 font-bold text-xs"><i class="fas fa-university ml-1 text-orange-500/50"></i> مصطفى محمود</span>
+                                        <div class="w-1 h-1 bg-gray-600 rounded-full"></div>
+                                        <span class="text-gray-500 font-medium text-[10px] uppercase tracking-widest">Developed by <span class="text-blue-400">Omar Abdel Tawab Saleh</span></span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 bg-green-500/10 px-4 py-2 rounded-full border border-green-500/20">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
+                                    <span class="text-green-500 text-[10px] font-black uppercase">Latest Update</span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-transparent via-orange-500 to-transparent w-full opacity-30"></div>
+                        </div>
+                    </div>-->
+                    
+                                       <!-- بطاقة اختبارات الفرقة الأولى -->
+                                       <!--
+                    <div onclick="window.handleFirstYearClick()" 
+                         class="glass p-10 rounded-[40px] text-center cursor-pointer relative overflow-hidden group hover:-translate-y-4 transition-all duration-500 card-hidden" data-card>
+                        <div class="absolute top-0 left-0 w-full h-1.5 moving-line"></div>
+                        <div class="absolute top-4 right-[-35px] bg-green-600 text-[10px] text-white px-10 py-1 rotate-45 font-black shadow-lg z-20">FREE</div>
+                        <div class="flex items-center justify-center gap-4 mb-6">
+                            <i class="fas fa-language text-5xl text-blue-500 transition-transform group-hover:scale-110"></i>
+                            <span class="text-2xl font-bold text-gray-400">+</span>
+                            <i class="fas fa-graduation-cap text-5xl text-green-500 transition-transform group-hover:scale-110"></i>
+                            <span class="text-2xl font-bold text-gray-400">+</span>
+                            <i class="fas fa-laptop-code text-5xl text-purple-500 transition-transform group-hover:scale-110"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">اختبارات الفرقة الأولى 📝</h3>
+                        <div class="flex items-center justify-center gap-3 text-xs">
+                            <span class="text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full">🇫🇷 Français</span>
+                            <span class="text-green-400 border border-green-500/30 px-3 py-1 rounded-full">🇬🇧 English</span>
+                            <span class="text-purple-400 border border-purple-500/30 px-3 py-1 rounded-full">💻 Computer</span>
+                        </div>
+                        <div class="text-xs text-gray-400 group-hover:text-orange-500 transition mt-3">دخول مجاني ✅</div>
+                    </div>-->
+
+
+                    <!-- بطاقة تحميل التطبيق -->
+                    ${renderCard("تطبيق الأكاديمية وتواصل معنا", "fa-mobile-screen-button", "#ff4757", "window.showAppModalFunc()")}
+
+                    <!-- كارت الشرح -->
+                    ${renderCard("عرض الشرح والملازم", "fa-chalkboard-teacher", "#00d2ff", "window.handleEnter('شرح')")}
+
+                    <!-- كارت صح وغلط -->
+                    ${renderCard("اختبارات صح وغلط", "fa-check-double", "#2ecc71", "window.handleEnter('صح وغلط')", true)}
+
+                    <!-- كارت الاختياري -->
+                    ${renderCard("قسم الاختياري", "fa-list-ol", "#ff8c00", "window.handleEnter('اختياري')", true)}
+
+                </div>
+                `;
+            }
+
+            // ---- دالة مساعدة لإنشاء البطاقات ----
+            function renderCard(title, icon, color, onClick, isFree = false) {
+                return `
+                <div onclick="${onClick}" 
+                     class="glass p-10 rounded-[40px] text-center cursor-pointer relative overflow-hidden group hover:-translate-y-4 transition-all duration-500 card-hidden" data-card>
+                    <div class="absolute top-0 left-0 w-full h-1.5 moving-line"></div>
+                    ${isFree ? `<div class="absolute top-4 right-[-35px] bg-green-600 text-[10px] text-white px-10 py-1 rotate-45 font-black shadow-lg z-20">FREE</div>` : ''}
+                    <i class="fas ${icon} text-5xl mb-6 transition-transform group-hover:scale-110" style="color:${color}"></i>
+                    <h3 class="text-xl font-bold mb-4">${title}</h3>
+                    <div class="text-xs text-gray-400 group-hover:text-orange-500 transition">
+                        ${isFree ? '<span class="text-green-500 font-bold underline">دخول مجاني الآن ✅</span>' : 'اضغط للدخول آمن'}
+                    </div>
+                </div>
+                `;
+            }
+
+            // ---- صفحة الاختبارات ----
+            function renderExams() {
+                return `
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-2xl font-bold text-orange-500 mb-6 text-center">اختبارات ${state.targetDept}</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        ${[1,2,3,4].map(num => `
+                            <div onclick="window.prepareQuiz('${state.targetDept}')" class="glass p-6 rounded-2xl relative overflow-hidden text-center cursor-pointer hover:scale-105 transition">
+                                <div class="absolute top-0 left-0 w-full h-1 moving-line"></div>
+                                <h4 class="font-bold mb-4">الاختبار ${num}</h4>
+                                <button class="bg-blue-600 text-xs py-2 px-4 rounded-full">ابدأ الاختبار</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                `;
+            }
+
+            // ---- صفحة الفرقة الأولى ----
+            function renderFirstYearLanguages() {
+                return `
+                <div class="z-50 w-full flex flex-col items-center pt-10 px-4">
+                    <h2 class="text-2xl font-black text-orange-500 mb-10">اختبارات الفرقة الأولى 📚</h2>
+                    <div class="grid md:grid-cols-2 gap-6 mt-10 w-full max-w-3xl">
+                        <!-- English -->
+                        <div onclick="window.selectLanguage('english')" class="glass p-8 rounded-3xl text-center cursor-pointer">
+                            <i class="fas fa-language text-5xl text-blue-500 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">اختبارات English 🇬🇧</h3>
+                            <p class="text-sm text-gray-400">40 سؤال على المنهج</p>
+                        </div>
+                        <!-- Computer -->
+                        <div onclick="window.selectLanguage('computer')" class="glass p-8 rounded-3xl text-center cursor-pointer">
+                            <i class="fas fa-laptop-code text-5xl text-purple-500 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">اختبارات Computer 💻</h3>
+                            <p class="text-sm text-gray-400">40 سؤال على أساسيات الحاسب</p>
+                        </div>
+                        <!-- Français -->
+                        <div onclick="window.selectLanguage('french')" class="glass p-8 rounded-3xl text-center cursor-pointer md:col-span-2 md:max-w-sm md:mx-auto">
+                            <i class="fas fa-language text-5xl text-green-500 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">اختبارات Français 🇫🇷</h3>
+                            <p class="text-sm text-gray-400">40 سؤال على المنهج</p>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+
+            // ---- صفحة الدروس (شرح) ----
+            function renderLessons() {
+                // دالة مساعدة لإنشاء مشغل فيديو مع عناصر التحكم
+                function videoPlayerHTML(playerId, videoId, title, colorClass, icon) {
+                    return `
+                    <div class="glass p-4 rounded-3xl relative overflow-hidden group shadow-2xl">
+                        <div class="absolute top-0 right-0 w-1 h-full ${colorClass}"></div>
+                        <h4 class="mb-4 font-bold pr-2 flex items-center text-white/90">
+                            <i class="fas ${icon} ml-2 ${colorClass}"></i> ${title}
+                        </h4>
+                        <div class="video-wrapper-inner" id="wrapper_${playerId}">
+                            <div id="player_${playerId}_container" style="width:100%; height:100%;">
+                                <div id="player_${playerId}"></div>
+                            </div>
+                            <div class="video-overlay" id="overlay_${playerId}"></div>
+                            <div class="loading-overlay" id="loading_${playerId}">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                        <!-- عناصر التحكم -->
+                        <div class="video-controls">
+                            <!-- شريط التقدم + الوقت -->
+                            <div class="progress-bar-wrapper">
+                                <span class="time-display" id="currentTime_${playerId}">00:00</span>
+                                <div class="progress-track" id="progressTrack_${playerId}">
+                                    <div class="progress-fill" id="progressFill_${playerId}"></div>
+                                </div>
+                                <span class="time-display" id="totalTime_${playerId}">00:00</span>
+                            </div>
+                            <!-- صف الأزرار -->
+                            <div class="controls-row">
+                                <button id="playBtn_${playerId}" title="تشغيل/إيقاف">▶</button>
+                                <button id="rewindBtn_${playerId}" title="رجوع 5 ثوانٍ">⏪</button>
+                                <button id="forwardBtn_${playerId}" title="تقديم 5 ثوانٍ">⏩</button>
+                                <button id="speedBtn_${playerId}" title="تغيير السرعة">1.0×</button>
+                                <div class="volume-wrap">
+                                    <button id="muteBtn_${playerId}" title="كتم/رفع الصوت">🔊</button>
+                                    <input type="range" class="volume-slider" id="volumeSlider_${playerId}" min="0" max="100" value="100" />
+                                </div>
+                                <button id="zoomInBtn_${playerId}" title="تكبير">🔍+</button>
+                                <button id="zoomOutBtn_${playerId}" title="تصغير">🔍−</button>
+                                <button id="resetZoomBtn_${playerId}" title="إعادة تعيين الزوم">⟲</button>
+                                <button id="fullscreenBtn_${playerId}" title="ملء الشاشة">⛶</button>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }
+
+                return `
+                <div class="max-w-6xl mx-auto relative min-h-screen">
+                    ${state.student.name ? `
+                    <div class="security-radar opacity-50 flex flex-col items-center justify-center pointer-events-none select-none">
+                        <span class="text-white font-black text-lg shadow-lg">${state.student.name}</span>
+                        <span class="text-orange-500 font-black text-2xl tracking-tighter">${state.student.phone}</span>
+                        <span class="text-blue-400 text-[10px] font-mono mt-1 bg-black/40 px-2 rounded-full">ID: ${state.student.code}</span>
+                        <span class="text-[7px] text-gray-500 uppercase mt-1">Property of Dr. Mostafa Mahmoud</span>
+                    </div>
+                    ` : ''}
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                        <!-- المحاضرة الأولى (تأسيس) -->
+                        ${videoPlayerHTML('1', 'uPW_vR_eJ1M', 'المحاضرة الأولى (تأسيس)', 'text-blue-500', 'fa-video')}
+
+                        <!-- المحاضرة الثانية -->
+                        ${videoPlayerHTML('2', 'OkQ76g96J4w', 'المحاضرة الثانية (جديد 🆕)', 'text-orange-500', 'fa-video')}
+
+                        <!-- فيديو حل الأسئلة -->
+                        <div class="glass p-4 rounded-3xl relative overflow-hidden group md:col-span-2">
+                            <div class="absolute top-0 right-0 w-1 h-full bg-green-500"></div>
+                            <h4 class="mb-4 font-bold pr-2 flex items-center text-white/90">
+                                <i class="fas fa-graduation-cap ml-2 text-green-500"></i> فيديوهات حل أسئلة الامتحانات السابقة 📚✍️
+                            </h4>
+                            ${videoPlayerHTML('3', 'XJWWoht908M', '', 'text-green-500', 'fa-graduation-cap')}
+                        </div>
+
+                        <!-- ملازم PDF -->
+                        <div class="glass p-6 rounded-3xl flex items-center justify-between border border-green-500/20 group">
+                            <div class="text-right">
+                                <h4 class="font-bold text-lg text-green-400"><i class="fas fa-file-pdf ml-2"></i> ملزمات الشرح PDF</h4>
+                                <p class="text-xs text-gray-500">اضغط للتحميل المباشر</p>
+                            </div>
+                            <a href="https://drive.google.com/file/d/1TDixq0P-0ANU3u6RuU66i1HQKWDSawUo/view?usp=drivesdk" class="bg-green-600 p-3 rounded-full text-white hover:scale-110 transition shadow-lg shadow-green-600/20">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </div>
+
+                        <!-- أرشيف الامتحانات -->
+                        <div class="glass p-6 rounded-3xl flex items-center justify-between border border-purple-500/20 group">
+                            <div class="text-right">
+                                <h4 class="font-bold text-lg text-purple-400"><i class="fas fa-history ml-2"></i> أرشيف الامتحانات السابقة</h4>
+                                <p class="text-xs text-gray-500">نماذج امتحانات السنوات الماضية</p>
+                            </div>
+                            <button class="bg-purple-600 p-3 rounded-full text-white hover:scale-110 transition shadow-lg shadow-purple-600/20">
+                                <i class="fas fa-file-signature"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 p-6 glass border-orange-500/20 rounded-3xl text-center relative z-10">
+                        <p class="text-orange-500 text-sm italic font-bold">
+                            <i class="fas fa-user-shield ml-2"></i>
+                            "يا بطل، المنصة مراقبة أمنياً.. ذاكر بتركيز وبالتوفيق!"
+                        </p>
+                    </div>
+                </div>
+                `;
+            }
+// ---- صفحة الاختبار (Quiz) ----
+// ---- صفحة الاختبار (Quiz) ----
+function renderQuiz() {
+    const q = state.quizQuestions[state.currentQIndex];
+    
+    // ===== عرض النتيجة النهائية =====
+    if (state.isFinished) {
+        // حساب النتيجة
+        let correctCount = 0;
+        state.quizQuestions.forEach((item, idx) => {
+            let correctAnswer;
+            if (typeof item.correct === 'number') {
+                correctAnswer = item.options[item.correct];
+            } else {
+                correctAnswer = item.correct;
+            }
+            const userAnswer = state.answers[idx];
+            if (userAnswer === correctAnswer) correctCount++;
+        });
+        const total = state.quizQuestions.length;
+
+        return `
+        <div class="max-w-3xl mx-auto glass p-8 rounded-[40px] relative overflow-hidden">
+            <!-- خط متحرك في الأعلى -->
+            <div class="absolute top-0 left-0 w-full h-1.5 moving-line"></div>
+            
+            <!-- عنوان النتيجة -->
+            <div class="text-center mb-8">
+                <div class="inline-block bg-gradient-to-r from-orange-500/20 to-blue-500/20 px-8 py-3 rounded-2xl border border-orange-500/30">
+                    <h2 class="text-3xl font-black text-white">
+                        🏆 نتيجتك 
+                        <span class="text-orange-500">${correctCount}</span>
+                        <span class="text-gray-400 text-2xl">/</span>
+                        <span class="text-blue-400">${total}</span>
+                    </h2>
+                </div>
+                <div class="mt-3">
+                    <span class="text-sm text-gray-400">✅ إجابات صحيحة</span>
+                    <span class="text-sm text-gray-600 mx-2">|</span>
+                    <span class="text-sm text-gray-400">❌ ${total - correctCount} إجابات خاطئة</span>
+                </div>
+                <div class="mt-3 w-full max-w-xs mx-auto bg-white/5 rounded-full h-2.5 overflow-hidden border border-white/10">
+                    <div class="bg-gradient-to-r from-green-500 to-green-400 h-2.5 rounded-full transition-all duration-1000" 
+                         style="width: ${(correctCount / total) * 100}%;">
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">نسبة النجاح: ${Math.round((correctCount / total) * 100)}%</p>
+            </div>
+
+            <!-- الأسئلة مع سكرول -->
+            <div class="max-h-[400px] overflow-y-auto pl-2 pr-1 space-y-4 custom-scrollbar">
+                ${state.quizQuestions.map((item, idx) => {
+                    let correctAnswer;
+                    if (typeof item.correct === 'number') {
+                        correctAnswer = item.options[item.correct];
+                    } else {
+                        correctAnswer = item.correct;
+                    }
+                    const userAnswer = state.answers[idx];
+                    const isCorrect = userAnswer === correctAnswer;
+                    return `
+                    <div class="p-5 rounded-2xl border transition-all duration-300 ${
+                        isCorrect 
+                            ? 'border-green-500/60 bg-gradient-to-r from-green-500/20 to-green-500/5 shadow-[0_0_30px_rgba(34,197,94,0.1)]' 
+                            : 'border-red-500/30 bg-red-500/5'
+                    }">
+                        <div class="flex items-start gap-3">
+                            <span class="text-sm font-bold text-orange-500 bg-orange-500/10 px-3 py-1 rounded-full min-w-[30px] text-center">${idx+1}</span>
+                            <div class="flex-1">
+                                <p class="font-bold text-sm md:text-base text-white/90 mb-2">${item.q || item.question}</p>
+                                <div class="flex flex-wrap items-center gap-3 text-xs md:text-sm">
+                                    <span class="${isCorrect ? 'text-green-400' : 'text-red-400'} font-bold">
+                                        ${isCorrect ? '✅ صحيحة' : '❌ خاطئة'}
+                                    </span>
+                                    <span class="text-gray-500">|</span>
+                                    <span class="text-gray-400">إجابتك: <span class="text-white font-bold">${userAnswer || 'لم تحل'}</span></span>
+                                    ${!isCorrect ? `
+                                    <span class="text-gray-500">|</span>
+                                    <span class="text-green-400 font-bold">الصحيحة: ${correctAnswer}</span>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }).join('')}
+            </div>
+
+            <!-- أزرار التحكم -->
+            <div class="flex gap-4 mt-8 pt-6 border-t border-white/10">
+                <button onclick="window.finishQuiz()" class="flex-1 bg-gradient-to-r from-orange-600 to-orange-500 py-4 rounded-2xl font-black text-white hover:scale-[1.02] transition-all shadow-lg shadow-orange-600/20">
+                    <i class="fas fa-home ml-2"></i> عودة للرئيسية
+                </button>
+                <button onclick="window.prepareQuiz('${state.targetDept}')" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-500 py-4 rounded-2xl font-black text-white hover:scale-[1.02] transition-all shadow-lg shadow-blue-600/20">
+                    <i class="fas fa-redo ml-2"></i> إعادة الاختبار
+                </button>
+            </div>
+        </div>
+
+        <style>
+            .custom-scrollbar::-webkit-scrollbar {
+                width: 6px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-track {
+                background: rgba(255,255,255,0.05);
+                border-radius: 10px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+                background: linear-gradient(180deg, #f97316, #3b82f6);
+                border-radius: 10px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(180deg, #ea580c, #2563eb);
+            }
+        </style>
+        `;
+    }
+
+    // ===== عرض السؤال الحالي مع التصحيح الفوري =====
+    if (!q) return '<div class="text-center text-gray-400 text-xl mt-20">جاري تحميل الأسئلة...</div>';
+
+    // حساب الإجابة الصحيحة للسؤال الحالي
+    let currentCorrectAnswer;
+    if (typeof q.correct === 'number') {
+        currentCorrectAnswer = q.options[q.correct];
+    } else {
+        currentCorrectAnswer = q.correct;
+    }
+    const currentUserAnswer = state.answers[state.currentQIndex];
+    const isCurrentAnswered = currentUserAnswer !== undefined;
+    const isCurrentCorrect = currentUserAnswer === currentCorrectAnswer;
+
+    return `
+    <div class="max-w-2xl mx-auto glass p-8 rounded-[40px] relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 moving-line"></div>
+        
+        <!-- ===== رأس الاختبار ===== -->
+        <div class="flex justify-between items-center mb-6">
+            <span class="text-blue-400 text-xs font-bold tracking-widest uppercase">${state.targetDept}</span>
+            <span class="bg-white/10 px-4 py-1 rounded-full text-orange-500 font-black">${state.currentQIndex+1} / ${state.quizQuestions.length}</span>
+        </div>
+        
+        <!-- ===== السؤال ===== -->
+        <h3 class="text-xl font-bold text-center mb-6 leading-relaxed">${q.q || q.question}</h3>
+        ${q.translation ? `<p class="text-center text-gray-400 mb-8">${q.translation}</p>` : ''}
+        
+        <!-- ===== الخيارات مع التصحيح الفوري ===== -->
+        <div class="grid grid-cols-1 gap-4">
+            ${q.options.map(opt => {
+                // تحديد حالة الخيار
+                let isSelected = currentUserAnswer === opt;
+                let isCorrectOption = opt === currentCorrectAnswer;
+                let showResult = isCurrentAnswered;
+                
+                // تحديد الألوان
+                let borderColor = 'border-white/10';
+                let bgColor = 'bg-white/5';
+                let textColor = 'text-white';
+                let hoverEffect = 'hover:bg-white/10';
+                let icon = '';
+                
+                if (showResult) {
+                    if (isCorrectOption) {
+                        // الإجابة الصحيحة (أخضر)
+                        borderColor = 'border-green-500/70';
+                        bgColor = 'bg-green-500/20';
+                        textColor = 'text-green-400';
+                        hoverEffect = '';
+                        icon = '<i class="fas fa-check-circle text-green-500 mr-2"></i>';
+                    } else if (isSelected && !isCorrectOption) {
+                        // الإجابة الغلط (أحمر)
+                        borderColor = 'border-red-500/70';
+                        bgColor = 'bg-red-500/20';
+                        textColor = 'text-red-400';
+                        hoverEffect = '';
+                        icon = '<i class="fas fa-times-circle text-red-500 mr-2"></i>';
+                    } else {
+                        // باقي الخيارات (معتمة)
+                        borderColor = 'border-white/5';
+                        bgColor = 'bg-white/5';
+                        textColor = 'text-gray-500';
+                        hoverEffect = '';
+                        icon = '';
+                    }
+                }
+                
+                return `
+                    <button onclick="window.selectAnswer('${opt.replace(/'/g, "\\'")}')" 
+                            class="p-4 rounded-2xl border text-right transition-all ${borderColor} ${bgColor} ${textColor} ${hoverEffect} flex items-center justify-between"
+                            ${showResult ? 'disabled style="cursor: default;"' : ''}>
+                        <span>${opt}</span>
+                        ${icon}
+                    </button>
+                `;
+            }).join('')}
+        </div>
+        
+        <!-- ===== رسالة التصحيح ===== -->
+        ${isCurrentAnswered ? `
+        <div class="mt-6 p-4 rounded-2xl ${isCurrentCorrect ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'} text-center">
+            <p class="font-bold ${isCurrentCorrect ? 'text-green-400' : 'text-red-400'}">
+                ${isCurrentCorrect ? '✅ إجابة صحيحة! أحسنت 🎉' : `❌ إجابة خاطئة! الإجابة الصحيحة هي: <span class="text-green-400 font-bold">${currentCorrectAnswer}</span>`}
+            </p>
+        </div>
+        ` : ''}
+        
+        <!-- ===== أزرار التحكم ===== -->
+        <div class="flex gap-4 mt-8">
+            <button onclick="window.confirmExit()" class="flex-1 min-w-[100px] border border-red-500/50 bg-red-500/10 py-3 rounded-xl font-bold text-red-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center gap-2">
+                <i class="fas fa-sign-out-alt"></i> خروج
+            </button>
+            <button ${state.currentQIndex === 0 ? 'disabled' : ''} onclick="window.prevQuestion()" class="flex-1 border border-white/20 py-3 rounded-xl disabled:opacity-30 text-white hover:bg-white/5 transition">السابق</button>
+            ${state.currentQIndex === state.quizQuestions.length - 1 ? 
+                `<button onclick="window.finishQuiz()" class="flex-1 bg-gradient-to-r from-green-600 to-green-500 py-3 rounded-xl font-bold text-white hover:scale-[1.02] transition-all shadow-lg shadow-green-600/20">عرض النتيجة</button>` :
+                `<button onclick="window.nextQuestion()" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-500 py-3 rounded-xl font-bold text-white hover:scale-[1.02] transition-all shadow-lg shadow-blue-600/20">التالي</button>`
+            }
+        </div>
+    </div>
+    `;
+}
+            // ---- صفحة الحظر ----
+            function renderBanned() {
+                return `
+                <div class="fixed inset-0 z-[9999] h-screen w-screen flex items-center justify-center p-4 bg-[#050a14] overflow-hidden select-none">
+                    <div class="glass p-10 rounded-[50px] border-2 border-red-900/20 max-w-md w-full text-center shadow-[0_0_150px_rgba(239,68,68,0.1)] relative overflow-hidden">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-red-500/5 blur-[60px] rounded-full"></div>
+                        <div class="relative mb-10 mt-2 flex items-center justify-center">
+                            <div class="absolute w-28 h-28 rounded-full bg-gradient-to-r from-red-600/30 to-red-900/40 p-1 blur-sm shadow-[inset_0_0_15px_rgba(239,68,68,0.3)]"></div>
+                            <div class="relative w-24 h-24 rounded-full bg-[#070e1b] flex items-center justify-center border-4 border-red-950 shadow-[5px_5px_20px_rgba(0,0,0,0.8),-5px,-5px,-20px,rgba(255,255,255,0.01)]">
+                                <div class="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-b from-white/10 to-transparent opacity-60"></div>
+                                <div class="relative text-red-500 flex items-center justify-center">
+                                    <i class="fas fa-user-circle text-5xl"></i>
+                                    <div class="absolute -bottom-1 -right-1 bg-red-600 w-8 h-8 rounded-full border-4 border-[#070e1b] flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-lock text-white text-xs"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="text-3xl font-black text-white mb-2 tracking-tighter glow-text">الوصول مقيد</h2>
+                        <p class="text-gray-500 text-sm mb-8 leading-relaxed">تم تعليق صلاحية دخول هذا الجهاز إلى المنصة بشكل نهائي بسبب مخالفة بنود الاستخدام.</p>
+                        <div class="bg-black/40 border border-red-500/20 p-5 rounded-3xl mb-7 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-40"></div>
+                            <p class="text-[10px] text-red-500 font-black uppercase tracking-[0.2em] mb-2">إشعار الإدارة:</p>
+                            <p class="text-gray-200 font-bold text-sm italic">"${state.kickReason || 'مخالفة سياسات الاستخدام'}"</p>
+                        </div>
+                        <div class="pt-6 border-t border-white/5 relative">
+                            <p class="text-gray-400 text-[12px] mb-5">إذا كنت تعتقد أن هذا الحظر تم عن طريق الخطأ، تواصل معنا:</p>
+                            <a href="https://wa.me/201202763155" target="_blank" rel="noopener noreferrer" 
+                               class="flex items-center justify-center gap-3 w-full bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] py-4 rounded-full font-bold transition-all border border-[#25D366]/30 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(37,211,102,0.2)]">
+                                <i class="fab fa-whatsapp text-2xl"></i>
+                                <span>مراسلة الدعم الفني</span>
+                            </a>
+                        </div>
+                        <div class="mt-8">
+                            <p class="text-[9px] text-gray-700 uppercase font-bold tracking-[0.3em]">System ID: ${Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+// ============================================================
+// صفحة شات الذكاء الاصطناعي - المعادلة الفرنسية
+// ============================================================
+function renderAIChat() {
+    // قاعدة بيانات الأسئلة والأجوبة
+    const faqData = [
+        {
+            q: "ما هي المعادلة التكميلية الفرنسية؟",
+            a: "المعادلة التكميلية الفرنسية هي اختبار يقدمه المجلس الأعلى للجامعات لطلبة كلية الحقوق، ويتضمن مواد: قانون مدني، قانون تجاري، قانون جنائي، وقانون إداري، بالإضافة إلى اللغة الفرنسية القانونية."
+        },
+        {
+            q: "ما هي المواد المطلوبة في المعادلة؟",
+            a: "المواد المطلوبة هي: القانون المدني، القانون التجاري، القانون الجنائي، القانون الإداري، واللغة الفرنسية (مصطلحات قانونية وترجمة)."
+        },
+        {
+            q: "كم عدد الأسئلة في امتحان المعادلة؟",
+            a: "يتكون الامتحان من 40 سؤالاً موزعة على المواد المختلفة، منها أسئلة اختيار من متعدد وأسئلة صح/خطأ."
+        },
+        {
+            q: "هل يوجد كتب أو ملازم للمعادلة؟",
+            a: "نعم، تتوفر ملازم شرح للمواد الخمس باللغتين العربية والفرنسية، بالإضافة إلى كتيبات مصطلحات قانونية."
+        },
+        {
+            q: "كيف يمكنني الاشتراك في دورة المعادلة؟",
+            a: "يمكنك الاشتراك عبر التواصل مع د. مصطفى محمود على واتساب: 201146681064، وسيتم تزويدك بكل التفاصيل."
+        },
+        {
+            q: "ما هو نظام الامتحان؟",
+            a: "الامتحان عبارة عن 40 سؤالاً اختيار من متعدد، ويتم التصحيح إلكترونياً، وتظهر النتيجة فور الانتهاء."
+        },
+        {
+            q: "هل الشهادة معترف بها؟",
+            a: "نعم، شهادة المعادلة التكميلية معترف بها من المجلس الأعلى للجامعات وتعادل سنة دراسية كاملة."
+        },
+        {
+            q: "متى موعد الامتحان؟",
+            a: "موعد الامتحان يحدده المجلس الأعلى للجامعات، ويتم الإعلان عنه عادة في بداية كل فصل دراسي."
+        }
+    ];
+
+    // دالة البحث عن الإجابة
+    function findAnswer(question) {
+        const lowerQ = question.trim().toLowerCase();
+        for (let item of faqData) {
+            if (item.q.includes(lowerQ) || lowerQ.includes(item.q.toLowerCase())) {
+                return item.a;
+            }
+        }
+        const keywords = ["مواد", "امتحان", "اشتراك", "شهادة", "موعد", "نظام", "كتب", "ملازم", "مصطلحات", "ترجمة", "مدني", "تجاري", "جنائي", "إداري"];
+        for (let kw of keywords) {
+            if (lowerQ.includes(kw)) {
+                return "يمكنك الاطلاع على الأسئلة المقترحة أدناه، أو توضيح سؤالك بشكل أكثر دقة.";
+            }
+        }
+        return null;
+    }
+
+    // تأثير الكتابة
+    function typeMessage(element, text, speed = 20) {
+        element.textContent = '';
+        let i = 0;
+        const interval = setInterval(() => {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                const container = document.getElementById('aiChatMessages');
+                if (container) container.scrollTop = container.scrollHeight;
+            } else {
+                clearInterval(interval);
+            }
+        }, speed);
+        return interval;
+    }
+
+    // دالة إضافة رسالة
+    function addMessage(sender, text) {
+        const container = document.getElementById('aiChatMessages');
+        if (!container) return;
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `ai-chat-message ${sender}`;
+        msgDiv.style.flexShrink = '0'; // منع الضغط
+        container.appendChild(msgDiv);
+        if (sender === 'user') {
+            msgDiv.innerHTML = `<span>${text}</span>`;
+        } else {
+            typeMessage(msgDiv, text);
+        }
+        container.scrollTop = container.scrollHeight;
+    }
+
+    // ===== تعريف الدوال في النطاق العام =====
+    window.handleSendQuestion = function() {
+        const input = document.getElementById('aiChatInput');
+        const question = input.value.trim();
+        if (!question) return;
+        addMessage('user', question);
+        input.value = '';
+        const answer = findAnswer(question);
+        if (answer) {
+            setTimeout(() => addMessage('bot', answer), 300);
+        } else {
+            setTimeout(() => {
+                addMessage('bot', '❌ عذراً، لم أجد إجابة محددة لسؤالك. يمكنك الاختيار من الأسئلة المقترحة أعلاه أو إعادة صياغة السؤال.');
+            }, 300);
+        }
+    };
+
+    window.askSuggested = function(q) {
+        const input = document.getElementById('aiChatInput');
+        input.value = q;
+        window.handleSendQuestion();
+    };
+
+    // HTML للصفحة
+    return `
+    <div id="aiChatContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,10,20,0.92); backdrop-filter: blur(20px); z-index: 50; display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; overflow: hidden; font-family: 'Cairo', sans-serif; color: white;">
+        
+        <!-- الهيدر -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;">
+            <div>
+                <h3 style="margin: 0; font-size: 1.1rem; font-weight: 700; background: linear-gradient(90deg, #3b82f6, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">مساعد المعادلة الفرنسية</h3>
+                <p style="margin: 2px 0 0 0; font-size: 0.6rem; color: rgba(255,255,255,0.3);">نموذج ذكاء اصطناعي للرد على أسئلة تتعلق بالأكاديمية فقط</p>
+            </div>
+            <button onclick="window.AppNavigate('home')" style="background: transparent; border: none; color: rgba(255,255,255,0.3); font-size: 1.5rem; cursor: pointer;">✕</button>
+        </div>
+
+        <!-- الأسئلة المقترحة (في الأعلى) -->
+        <div style="padding: 10px 0 8px 0; flex-shrink: 0; overflow-x: auto; white-space: nowrap; display: flex; gap: 8px; align-items: center; scrollbar-width: thin; min-height: 40px;">
+            ${faqData.map(item => `
+                <button onclick="window.askSuggested('${item.q.replace(/'/g, "\\'")}')" 
+                        style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 30px; padding: 5px 14px; color: rgba(255,255,255,0.7); font-size: 0.7rem; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(4px); flex-shrink: 0;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.borderColor='rgba(59,130,246,0.4)';"
+                        onmouseout="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,255,255,0.06)';">
+                    ${item.q}
+                </button>
+            `).join('')}
+        </div>
+
+        <!-- منطقة الرسائل (مع إصلاح التكدس) -->
+        <div id="aiChatMessages" style="flex: 1 1 0; min-height: 0; overflow-y: auto; padding: 8px 0 8px 0; display: flex; flex-direction: column; gap: 8px; scroll-behavior: smooth;">
+            <!-- رسالة الترحيب -->
+            <div class="ai-chat-message bot" style="flex-shrink: 0; background: rgba(255,255,255,0.04); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.06); border-radius: 18px; border-bottom-left-radius: 4px; padding: 10px 14px; max-width: 85%; align-self: flex-start; font-size: 0.85rem; line-height: 1.6; color: #e5e7eb;">
+                <span>👋 مرحباً بك! اسألني أي شيء عن المعادلة الفرنسية، المواد، الامتحان، أو الاشتراك.</span>
+            </div>
+        </div>
+
+        <!-- مربع الإدخال -->
+        <div style="display: flex; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;">
+            <input id="aiChatInput" type="text" placeholder="اكتب سؤالك هنا..." 
+                   style="flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 50px; padding: 8px 16px; color: white; font-size: 0.85rem; outline: none; transition: border 0.2s;"
+                   onfocus="this.style.borderColor='rgba(59,130,246,0.5)'"
+                   onblur="this.style.borderColor='rgba(255,255,255,0.08)'"
+                   onkeydown="if(event.key==='Enter') window.handleSendQuestion()" />
+            <button onclick="window.handleSendQuestion()" 
+                    style="background: linear-gradient(135deg, #1e3a8a, #2563eb); border: none; border-radius: 50px; padding: 8px 20px; color: white; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.transform='scale(1.03)'"
+                    onmouseout="this.style.transform='scale(1)'">
+                إرسال
+            </button>
+        </div>
+
+        <style>
+            .ai-chat-message {
+                animation: fadeIn 0.3s ease;
+                flex-shrink: 0; /* منع الضغط والتكدس */
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                max-width: 85%;
+            }
+            .ai-chat-message.user {
+                background: linear-gradient(135deg, #1e3a8a, #2563eb);
+                color: white;
+                border-radius: 18px;
+                border-bottom-right-radius: 4px;
+                padding: 10px 16px;
+                align-self: flex-end;
+                font-size: 0.85rem;
+                line-height: 1.6;
+            }
+            .ai-chat-message.bot {
+                background: rgba(255,255,255,0.04);
+                backdrop-filter: blur(4px);
+                border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 18px;
+                border-bottom-left-radius: 4px;
+                padding: 10px 16px;
+                align-self: flex-start;
+                font-size: 0.85rem;
+                line-height: 1.6;
+                color: #e5e7eb;
+                min-height: 28px;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(8px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            /* تخصيص شريط التمرير العمودي */
+            #aiChatMessages::-webkit-scrollbar {
+                width: 4px;
+            }
+            #aiChatMessages::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            #aiChatMessages::-webkit-scrollbar-thumb {
+                background: rgba(255,255,255,0.2);
+                border-radius: 10px;
+            }
+            /* تخصيص شريط التمرير الأفقي للأسئلة */
+            .suggestions-scroll::-webkit-scrollbar {
+                height: 3px;
+            }
+            .suggestions-scroll::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .suggestions-scroll::-webkit-scrollbar-thumb {
+                background: rgba(255,255,255,0.2);
+                border-radius: 10px;
+            }
+        </style>
+    </div>
+    `;
+}
+
+
+            // ---- مودال تسجيل الدخول ----
+            function renderLoginModal() {
+                return `
+                <div class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4">
+                    <div class="bg-[#0a192f] border-2 border-orange-500 p-8 rounded-[40px] w-full max-w-md shadow-2xl">
+                        <h3 class="text-2xl font-black text-center text-orange-500 mb-6 italic underline">تسجيل الدخول</h3>
+                        <input id="loginName" type="text" placeholder="الاسم ثلاثي" value="${state.student.name}" 
+                               class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 text-white outline-none focus:border-orange-500" />
+                        <input id="loginPhone" type="tel" placeholder="رقم الهاتف" value="${state.student.phone}" 
+                               class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 text-white outline-none focus:border-orange-500" />
+                        ${!state.isFreeMode ? `
+                        <input id="loginCode" type="text" placeholder="كود التفعيل (🔑)" value="${state.student.code}" 
+                               class="w-full bg-white/5 border border-orange-500/50 p-4 rounded-2xl mb-4 text-orange-500 font-bold outline-none focus:border-orange-500 animate-pulse" />
+                        ` : `
+                        <div class="text-green-500 text-xs text-center mb-4 font-bold border border-green-500/20 p-2 rounded-xl bg-green-500/5">
+                            ✨ القسم ده مجاني.. سجل بياناتك وابدأ فوراً! ✨
+                        </div>
+                        `}
+                        <select id="loginLevel" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-6 text-gray-400 outline-none">
+                            <option value="">اختر الفرقة</option>
+                            <option value="الأولى" ${state.student.level === 'الأولى' ? 'selected' : ''}>الفرقة الأولى</option>
+                            <option value="الثانية" ${state.student.level === 'الثانية' ? 'selected' : ''}>الفرقة الثانية</option>
+                            <option value="الثالثة" ${state.student.level === 'الثالثة' ? 'selected' : ''}>الفرقة الثالثة</option>
+                            <option value="الرابعة" ${state.student.level === 'الرابعة' ? 'selected' : ''}>الفرقة الرابعة</option>
+                        </select>
+                        <select id="loginUniversity" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 text-gray-400 outline-none">
+                            <option value="">اختر جامعتك</option>
+                            <option value="حلوان (العاصمة سابقا)" ${state.student.university === 'حلوان (العاصمة سابقا)' ? 'selected' : ''}>جامعة حلوان (العاصمة سابقاً)</option>
+                            <option value="القاهرة" ${state.student.university === 'القاهرة' ? 'selected' : ''}>جامعة القاهرة</option>
+                            <option value="عين شمس" ${state.student.university === 'عين شمس' ? 'selected' : ''}>جامعة عين شمس</option>
+                            <option value="المنصورة" ${state.student.university === 'المنصورة' ? 'selected' : ''}>جامعة المنصورة</option>
+                        </select>
+                        <button onclick="window.finalizeLogin()" class="w-full bg-orange-600 py-4 rounded-2xl font-black hover:bg-orange-500 transition-colors">دخول الأكاديمية</button>
+                        <button onclick="window.closeLogin()" class="w-full mt-4 text-gray-500 text-sm">إلغاء</button>
+                    </div>
+                </div>
+                `;
+            }
+
+            // ---- مودال المطور ----
+           
+            // ---- مودال تحميل التطبيق (المعدل لـ PWA) ----
+            function renderAppModal() {
+                return `
+                <div class="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-fadeIn">
+                    <div class="glass p-8 rounded-[40px] border border-green-500/30 max-w-md w-full relative overflow-hidden shadow-[0_0_50px_rgba(34,197,94,0.2)]">
+                        <button onclick="window.closeAppModal()" class="absolute top-6 left-6 text-gray-500 hover:text-white">
+                            <i class="fas fa-times-circle text-2xl"></i>
+                        </button>
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-gradient-to-br from-green-600 to-green-400 rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-lg rotate-3 group-hover:rotate-0 transition">
+                                <i class="fas fa-graduation-cap text-5xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-black text-white mb-1 text-right">تطبيق د. مصطفى محمود</h3>
+                            <p class="text-green-400 text-xs font-mono mb-6 text-right uppercase tracking-tighter">PWA Version 1.0.3</p>
+                            
+                            <!-- زر تثبيت PWA -->
+                            <button id="installPwaBtn" 
+                                    class="block w-full bg-green-600 hover:bg-green-500 text-white py-5 rounded-2xl font-black text-xl mb-4 shadow-xl shadow-green-600/20 transition-all active:scale-95">
+                                <i class="fas fa-download ml-2"></i> تثبيت التطبيق
+                            </button>
+
+                            <!-- تعليمات التثبيت اليدوي (للمتصفحات التي لا تدعم beforeinstallprompt) -->
+                            <div class="text-right text-sm text-gray-400 border-t border-white/10 pt-4 mt-2">
+                                <p class="text-[11px] leading-relaxed">
+                                    📱 <strong>طريقة التثبيت اليدوي:</strong><br>
+                                    • <strong>Android (Chrome):</strong> اضغط على القائمة (⋮) → "تثبيت التطبيق".<br>
+                                    • <strong>iOS (Safari):</strong> اضغط على زر المشاركة (⬆) → "إضافة إلى الشاشة الرئيسية".<br>
+                                    • <strong>الكمبيوتر (Chrome/Edge):</strong> اضغط على أيقونة التثبيت في شريط العناوين (➕).
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-4 border-t border-white/10 pt-6 mt-4">
+                                <a href="#" class="flex flex-col items-center gap-2 text-gray-400 hover:text-blue-500 transition">
+                                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10"><i class="fab fa-facebook-f"></i></div>
+                                    <span class="text-[10px]">فيسبوك</span>
+                                </a>
+                                <a href="https://wa.me/2010xxxxxxxx" class="flex flex-col items-center gap-2 text-gray-400 hover:text-green-500 transition">
+                                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10"><i class="fab fa-whatsapp"></i></div>
+                                    <span class="text-[10px]">واتساب</span>
+                                </a>
+                                <a href="#" class="flex flex-col items-center gap-2 text-gray-400 hover:text-orange-500 transition">
+                                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10"><i class="fas fa-globe"></i></div>
+                                    <span class="text-[10px]">موقعي</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+
+            // ---- مودال اختيار نوع الاختبار ----
+            function renderNewExamModal() {
+                return `
+                <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+                    <div class="bg-[#0a0a0a] border border-white/10 w-full max-w-2xl rounded-[40px] p-8 shadow-2xl relative overflow-hidden">
+                        <div class="absolute -top-24 -left-24 w-48 h-48 bg-orange-500/10 blur-[100px]"></div>
+                        <h2 class="text-2xl font-black text-center mb-8 text-white">اختر نوع الاختبار</h2>
+                        <div class="grid grid-cols-1 gap-6">
+                            <button onclick="window.startQuiz('صح وغلط')" 
+                                    class="group relative flex items-center justify-between overflow-hidden bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20 p-8 rounded-[30px] transition-all hover:scale-[1.02] hover:border-green-500 active:scale-95">
+                                <div class="flex items-center gap-6">
+                                    <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform">
+                                        <i class="fas fa-file-signature text-3xl text-green-500"></i>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="block text-xl font-black text-white">اختبار الصواب والخطأ</span>
+                                        <span class="text-xs text-green-500/60 font-bold">نظام التظليل (أ) و (هـ)</span>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-left text-green-500/30 group-hover:translate-x-[-10px] transition-transform"></i>
+                                <div class="absolute bottom-0 left-0 w-full h-1 bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.8)]"></div>
+                            </button>
+                            <button onclick="window.startQuiz('اختياري')" 
+                                    class="group relative flex items-center justify-between overflow-hidden bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20 p-8 rounded-[30px] transition-all hover:scale-[1.02] hover:border-blue-500 active:scale-95">
+                                <div class="flex items-center gap-6">
+                                    <div class="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform">
+                                        <i class="fas fa-layer-group text-3xl text-blue-500"></i>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="block text-xl font-black text-white">اختبار متعدد الخيارات</span>
+                                        <span class="text-xs text-blue-500/60 font-bold">أسئلة تحليلية وشاملة</span>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-left text-blue-500/30 group-hover:translate-x-[-10px] transition-transform"></i>
+                                <div class="absolute bottom-0 left-0 w-full h-1 bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.8)]"></div>
+                            </button>
+                        </div>
+                        <button onclick="window.closeNewExamModal()" class="w-full mt-8 py-3 text-gray-500 hover:text-white transition font-bold text-sm">إغلاق النافذة</button>
+                        <p class="text-center mt-6 text-[8px] text-gray-600 font-mono tracking-[4px] opacity-50">SECURED SYSTEM BY OMAR ABDEL TAWAB</p>
+                    </div>
+                </div>
+                `;
+            }
+
+            // ---- Overlay التحقق ----
+            function renderCheckingOverlay() {
+                return `
+                <div style="position:fixed; top:0; left:0; width:100%; height:100%; backdrop-filter:blur(8px); background:rgba(0,0,0,0.4); z-index:9999; display:flex; align-items:center; justify-content:center; flex-direction:column; color:white; text-align:center; font-family:Cairo, sans-serif;">
+                    <div style="width:60px; height:60px; border:5px solid rgba(255,255,255,0.3); border-top:5px solid #00d4ff; border-radius:50%; animation:spin 1s linear infinite; margin-bottom:20px;"></div>
+                    <h2 style="margin-bottom:10px;">مرحباً بك 👋</h2>
+                    <p style="font-size:18px;">جاري التحقق من قاعدة البيانات...</p>
+                    <p style="opacity:0.8;">يرجى الانتظار قليلاً</p>
+                </div>
+                `;
+            }
+
+            // ============================================================
+            // 7. دوال الأحداث (Event Handlers)
+            // ============================================================
+
+            // ---- دوال القائمة الجانبية ----
+            window.toggleSidebar = function () {
+    const overlay = document.getElementById('sidebarOverlay');
+    const menu = document.getElementById('sidebarMenu');
+
+    if (!overlay || !menu) return;
+
+    const isClosed =
+        overlay.classList.contains('opacity-0') ||
+        overlay.style.display === 'none';
+
+    if (isClosed) {
+
+        // فتح القائمة
+        overlay.style.display = 'block';
+
+        overlay.classList.remove(
+            'opacity-0',
+            'pointer-events-none'
+        );
+
+        overlay.classList.add('opacity-100');
+
+        menu.classList.remove('translate-x-full');
+
+        document.body.style.overflow = 'hidden';
+
+    } else {
+
+        // غلق القائمة
+        overlay.classList.remove('opacity-100');
+
+        overlay.classList.add(
+            'opacity-0',
+            'pointer-events-none'
+        );
+
+        menu.classList.add('translate-x-full');
+
+        document.body.style.overflow = '';
+
+        // إخفاء الخلفية نهائياً بعد انتهاء الأنيميشن
+        setTimeout(() => {
+            if (overlay.classList.contains('opacity-0')) {
+                overlay.style.display = 'none';
+            }
+        }, 500);
+    }
+};
+
+// غلق القائمة عند الضغط على الخلفية
+document.addEventListener('click', function (e) {
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if (overlay && e.target === overlay) {
+        window.toggleSidebar();
+    }
+});
+            // ---- دوال خيارات القائمة الجانبية ----
+            window.contactSupport = function() {
+                window.toggleSidebar();
+                setTimeout(() => {
+                    window.open('https://wa.me/201146681064', '_blank');
+                }, 300);
+            };
+
+            window.reportProblem = function() {
+                window.toggleSidebar();
+                setTimeout(() => {
+                    alert('📝 للإبلاغ عن مشكلة، يرجى التواصل مع الدعم الفني عبر واتساب');
+                    window.open('https://wa.me/201146681064', '_blank');
+                }, 300);
+            };
+
+            window.requestCode = function() {
+                window.toggleSidebar();
+                setTimeout(() => {
+                    alert('🔑 للطلب كود اشتراك، يرجى التواصل مع الدكتور عبر واتساب');
+                    window.open('https://wa.me/201146681064', '_blank');
+                }, 300);
+            };
+
+            window.supportRequest = function() {
+                window.toggleSidebar();
+                setTimeout(() => {
+                    alert('🛠️ لتقديم دعم فني، يرجى التواصل مع فريق الدعم');
+                    window.open('https://wa.me/201146681064', '_blank');
+                }, 300);
+            };
+
+            window.aboutUs = function() {
+window.toggleSidebar();
+setTimeout(() => {
+showCenteredBigToast(
+'المعادلة التكميلية الفرنسية\nالمجلس الأعلى للجامعات\n\nمحاضر حقوق عربى وإنجليزى وفرنسى\n\nمصطلحات قانونية باللغة الأجنبية\n\nترجمة قانونية'
+);
+}, 300);
+};
+
+            window.scrollToCards = function() {
+                const container = document.getElementById('cardsContainer');
+                if (container) {
+                    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+
+            window.AppNavigate = function(view) {
+                state.view = view;
+                render();
+            };
+
+            window.handleFirstYearClick = function() {
+                const savedStudent = localStorage.getItem('academy_student_data');
+                if (savedStudent) {
+                    const parsed = JSON.parse(savedStudent);
+                    state.student = parsed;
+                    state.isFreeMode = true;
+                    state.targetDept = 'firstYear';
+                    state.view = 'firstYearLanguages';
+                    render();
+                } else {
+                    state.targetDept = 'firstYear';
+                    state.isFreeMode = true;
+                    state.showLogin = true;
+                    render();
+                }
+            };
+
+            window.handleEnter = function(dept) {
+                state.targetDept = dept;
+                trackActivity(`📂 فتح قسم: ${dept}`);
+
+                const savedData = localStorage.getItem('academy_student_data');
+                const isFreeDept = (dept === 'صح وغلط' || dept === 'اختياري' || dept === 'firstYear');
+                state.isFreeMode = isFreeDept;
+
+                if (dept === 'شرح') {
+                    if (savedData) {
+                        const parsed = JSON.parse(savedData);
+                        state.student = parsed;
+                        state.view = 'lessons';
+                        render();
+                        // بعد التصيير، تهيئة المشغلات
+                        setTimeout(() => {
+                            if (typeof window.initVideoPlayers === 'function') {
+                                window.initVideoPlayers();
+                            }
+                        }, 300);
+                    } else {
+                        state.showLogin = true;
+                        render();
+                    }
+                    return;
+                }
+
+                if (savedData) {
+                    const parsed = JSON.parse(savedData);
+                    state.student = parsed;
+                    if (dept === 'firstYear') {
+                        state.view = 'firstYearLanguages';
+                    } else {
+                        state.view = 'exams';
+                    }
+                    render();
+                } else {
+                    state.showLogin = true;
+                    render();
+                }
+            };
+
+            window.prepareQuiz = function(type) {
+                const requestedType = type === 'صح وغلط' ? 'صح وغلط' : 'اختياري';
+                let allQuestions = [];
+
+                if (state.selectedLanguage === 'english') {
+                    allQuestions = englishQuestions;
+                } else if (state.selectedLanguage === 'french') {
+                    allQuestions = frenchQuestions;
+                } else if (state.selectedLanguage === 'computer') {
+                    allQuestions = computerQuestions;
+                } else {
+                    allQuestions = questionsDB[requestedType] || [];
+                }
+
+                let filteredQuestions = [];
+                if (requestedType === 'صح وغلط') {
+                    filteredQuestions = allQuestions.filter(q => q.options && q.options.length === 2);
+                } else {
+                    filteredQuestions = allQuestions.filter(q => q.options && q.options.length > 2);
+                }
+
+                if (filteredQuestions.length === 0) {
+                    alert('عذراً، لا توجد أسئلة متوفرة لهذا النوع في هذا القسم حالياً.');
+                    return;
+                }
+
+                const selected = shuffleAndPick(filteredQuestions);
+                state.quizQuestions = selected;
+                state.currentQIndex = 0;
+                state.answers = {};
+                state.isFinished = false;
+                state.view = 'quiz_mode';
+                render();
+            };
+
+            window.selectLanguage = function(lang) {
+                state.selectedLanguage = lang;
+                state.showNewExamModal = true;
+                render();
+            };
+
+            window.startQuiz = function(type) {
+                state.showNewExamModal = false;
+                window.prepareQuiz(type);
+            };
+
+            window.selectAnswer = function(opt) {
+                state.answers[state.currentQIndex] = opt;
+                render();
+            };
+
+            window.nextQuestion = function() {
+                if (state.currentQIndex < state.quizQuestions.length - 1) {
+                    state.currentQIndex++;
+                    render();
+                }
+            };
+
+            window.prevQuestion = function() {
+                if (state.currentQIndex > 0) {
+                    state.currentQIndex--;
+                    render();
+                }
+            };
+
+            window.confirmExit = function() {
+                if (confirm('هل أنت متأكد من إنهاء الاختبار والعودة للرئيسية؟')) {
+                    state.view = 'home';
+                    state.isFinished = false;
+                    render();
+                }
+            };
+
+            window.finishQuiz = function() {
+                if (state.isFinished) {
+                    state.view = 'home';
+                    state.isFinished = false;
+                    render();
+                } else {
+                    state.isFinished = true;
+                    render();
+                }
+            };
+
+            // ============================================================
+            // 8. دالة finalizeLogin المعدلة (باستخدام Toast بدلاً من Alert)
+            // ============================================================
+            window.finalizeLogin = async function() {
+                // ----- جلب البيانات من الحقول -----
+                const name = document.getElementById('loginName')?.value?.trim() || state.student.name;
+                const phone = document.getElementById('loginPhone')?.value?.trim() || state.student.phone;
+                const level = document.getElementById('loginLevel')?.value || state.student.level;
+                const university = document.getElementById('loginUniversity')?.value || state.student.university;
+                const enteredCode = document.getElementById('loginCode')?.value?.trim().toLowerCase() || state.student.code;
+                const sourceDept = state.targetDept;
+
+                // ----- التحقق من إكمال البيانات -----
+                if (!name || !level || !phone || !university) {
+                    showToast('⚠️ فضلاً أكمل جميع البيانات (الاسم، الفرقة، الهاتف، الجامعة)!', 3000);
+                    return;
+                }
+
+                // ----- وضع شاشة تحميل -----
+                state.isChecking = true;
+                render();
+
+                try {
+                    // ----- الحالة الأولى: الأقسام المجانية (لا تحتاج لكود) -----
+                    if (state.isFreeMode) {
+                        const sessionData = {
+                            name,
+                            level,
+                            phone,
+                            university,
+                            code: "",
+                            loginDate: Date.now(),
+                            status: 'active',
+                            access: true,
+                            deviceId: getDeviceId()
+                        };
+                        localStorage.setItem('academy_student_data', JSON.stringify(sessionData));
+                        state.student = sessionData;
+                        trackActivity("✅ دخول قسم مجاني", `${sourceDept} - ${name} - ${university}`);
+                        showToast('✅ تم الدخول بنجاح!', 2000);
+                        state.showLogin = false;
+                        if (sourceDept === 'firstYear') {
+                            state.view = 'firstYearLanguages';
+                        } else {
+                            state.view = 'exams';
+                        }
+                        state.isChecking = false;
+                        render();
+                        return;
+                    }
+
+                    // ----- الحالة الثانية: الأقسام المدفوعة (تتطلب كود وتحقق) -----
+                    if (!enteredCode) {
+                        showToast('⚠️ أدخل كود التفعيل للدخول إلى قسم الشرح!', 3000);
+                        state.isChecking = false;
+                        render();
+                        return;
+                    }
+
+                    // ---- 1. التحقق من صحة الكود في القائمة المحلية (كخطوة أولى سريعة) ----
+                    if (!VALID_LOCAL_CODES.includes(enteredCode)) {
+                        showToast('❌ كود التفعيل غير صحيح!', 3000);
+                        state.isChecking = false;
+                        render();
+                        return;
+                    }
+
+                    // ---- 2. التأكد من تهيئة Firebase ----
+                    if (!ensureFirebaseInit()) {
+                        showToast('❌ حدث خطأ في الاتصال بقاعدة البيانات، حاول مرة أخرى.', 3000);
+                        state.isChecking = false;
+                        render();
+                        return;
+                    }
+
+                    // ---- 3. التحقق من حالة الكود في Firebase ----
+                    const codeRecord = await checkCodeInFirebase(enteredCode);
+                    const currentDeviceId = getDeviceId();
+
+                    // ---- 4. حالات الكود ----
+                    if (!codeRecord) {
+                        // **الكود غير مستخدم من قبل → تسجيله والسماح بالدخول**
+                        await registerCodeInFirebase(enteredCode, name, phone);
+                        // حفظ الجلسة محلياً
+                        const sessionData = {
+                            name,
+                            level,
+                            phone,
+                            university,
+                            code: enteredCode,
+                            loginDate: Date.now(),
+                            status: 'active',
+                            access: true,
+                            deviceId: currentDeviceId
+                        };
+                        localStorage.setItem('academy_student_data', JSON.stringify(sessionData));
+                        state.student = sessionData;
+                        trackActivity("✅ دخول قسم مدفوع (كود جديد)", `${name} - كود: ${enteredCode}`);
+                        showToast('✅ تم تفعيل الكود بنجاح!', 2000);
+                        state.showLogin = false;
+                        state.view = 'lessons';
+                        // تهيئة مشغلات الفيديو بعد التصيير
+                        setTimeout(() => {
+                            if (typeof window.initVideoPlayers === 'function') {
+                                window.initVideoPlayers();
+                            }
+                        }, 300);
+                    } else {
+                        // **الكود مستخدم بالفعل**
+                        if (codeRecord.deviceId === currentDeviceId) {
+                            // **نفس الجهاز → السماح بالدخول**
+                            const sessionData = {
+                                name,
+                                level,
+                                phone,
+                                university,
+                                code: enteredCode,
+                                loginDate: Date.now(),
+                                status: 'active',
+                                access: true,
+                                deviceId: currentDeviceId
+                            };
+                            localStorage.setItem('academy_student_data', JSON.stringify(sessionData));
+                            state.student = sessionData;
+                            trackActivity("✅ دخول قسم مدفوع (نفس الجهاز)", `${name} - كود: ${enteredCode}`);
+                            showToast('✅ مرحباً بعودتك!', 2000);
+                            state.showLogin = false;
+                            state.view = 'lessons';
+                            setTimeout(() => {
+                                if (typeof window.initVideoPlayers === 'function') {
+                                    window.initVideoPlayers();
+                                }
+                            }, 300);
+                        } else {
+                            // **جهاز مختلف → منع الدخول وإشعار الإدارة**
+                            // تسجيل محاولة اختراق في Firebase (اختياري)
+                            const db = firebase.database();
+                            await db.ref('suspiciousAttempts').push({
+                                code: enteredCode,
+                                attemptedDevice: currentDeviceId,
+                                registeredDevice: codeRecord.deviceId,
+                                userName: name,
+                                phone: phone,
+                                timestamp: Date.now()
+                            });
+
+                            // إرسال إشعار فوري للإدارة عبر تيليجرام
+                            trackActivity("⚠️ محاولة دخول من جهاز مختلف", `الكود: ${enteredCode} - المستخدم: ${name} - الجهاز المسجل: ${codeRecord.deviceId}`);
+
+                            // رسالة تحذيرية باستخدام Toast (بدلاً من Alert)
+                            showToast('⚠️ هذا الكود مستخدم بالفعل من جهاز آخر. إذا كنت أنت صاحب الكود، يرجى التواصل مع الدعم الفني.', 5000);
+                            
+                            // إظهار رسالة إضافية تحتوي على تفاصيل الاتصال (اختياري)
+                            setTimeout(() => {
+                                showToast('📞 للتواصل: واتساب 201146681064', 4000);
+                            }, 1000);
+
+                            state.isChecking = false;
+                            render();
+                            return;
+                        }
+                    }
+
+                    state.isChecking = false;
+                    render();
+
+                } catch (error) {
+                    console.error("Login Error:", error);
+                    showToast('❌ حدث خطأ أثناء تسجيل الدخول، حاول مرة أخرى أو تواصل مع الدعم.', 4000);
+                    state.isChecking = false;
+                    render();
+                }
+            };
+
+            window.closeLogin = function() {
+                state.showLogin = false;
+                render();
+            };
+
+            window.closeDevCard = function() {
+                state.showDevCard = false;
+                render();
+            };
+
+            window.showAppModalFunc = function() {
+                state.showAppModal = true;
+                render();
+            };
+
+            window.closeAppModal = function() {
+                state.showAppModal = false;
+                render();
+            };
+
+            window.closeNewExamModal = function() {
+                state.showNewExamModal = false;
+                render();
+            };
+
+            // ============================================================
+            // 9. دوال إخفاء وإظهار البطاقات عند التمرير
+            // ============================================================
+
+            function observeCards() {
+                const cards = document.querySelectorAll('[data-card]');
+                if (!cards.length) return;
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.remove('card-hidden');
+                            entry.target.classList.add('card-visible');
+                        } else {
+                            entry.target.classList.remove('card-visible');
+                            entry.target.classList.add('card-hidden');
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+
+                cards.forEach(card => observer.observe(card));
+            }
+
+            // ============================================================
+            // 10. ربط الأحداث بعد التصيير
+            // ============================================================
+
+            function bindEvents() {
+                // إعادة تطبيق مراقبة البطاقات بعد كل رندر
+                setTimeout(observeCards, 100);
+            }
+
+            // ============================================================
+            // 11. تهيئة التطبيق (Boot) - بدون شاشة تحميل
+            // ============================================================
+
+            function init() {
+                const savedStudent = localStorage.getItem('academy_student_data');
+                if (savedStudent) {
+                    const parsed = JSON.parse(savedStudent);
+                    state.student = parsed;
+                    state.view = 'home';
+                    trackActivity("🔄 إعادة دخول للمنصة", `مرحباً بعودتك ${parsed.name}`);
+                } else {
+                    state.view = 'home';
+                    state.showDevCard = true;
+                }
+
+                state.isLoading = false;
+                state.authChecked = true;
+                render();
+            }
+
+            // بدء التطبيق
+            init();
+
+        })();
+    </script>
+
+    <!-- ============================================================
+    مشغلات الفيديو (YouTube IFrame API) - مدمجة مع التطبيق
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // 1. مشغلات الفيديو
+        // ============================================================
+        var players = {
+            1: null,
+            2: null,
+            3: null
+        };
+        var playerStates = {
+            1: { zoom: 1, volume: 100, muted: false, speed: 1, currentTime: 0, duration: 0, isPlaying: false },
+            2: { zoom: 1, volume: 100, muted: false, speed: 1, currentTime: 0, duration: 0, isPlaying: false },
+            3: { zoom: 1, volume: 100, muted: false, speed: 1, currentTime: 0, duration: 0, isPlaying: false }
+        };
+        var progressIntervals = {};
+
+        function onYouTubeIframeAPIReady() {
+            console.log('YouTube API ready, waiting for players...');
+        }
+
+        window.initVideoPlayers = function() {
+            // تحقق من وجود العناصر
+            if (!document.getElementById('player_1') || !document.getElementById('player_2') || !document.getElementById('player_3')) {
+                console.warn('Players not found in DOM, retrying...');
+                setTimeout(window.initVideoPlayers, 500);
+                return;
+            }
+
+            console.log('Initializing video players...');
+
+            // المحاضرة الأولى (تأسيس)
+          // المحاضرة الأولى (تأسيس)
+players[1] = new YT.Player('player_1', {
+    videoId: 'uPW_vR_eJ1M',
+    playerVars: { controls: 0, rel: 0, modestbranding: 1, iv_load_policy: 3, disablekb: 1 },
+    events: {
+        onReady: function(e) { onPlayerReady(1, e); },
+        onStateChange: function(e) { onPlayerStateChange(1, e); },
+        onError: function(e) { showToast('⚠️ حدث خطأ في الفيديو الأول'); }
+    }
+});
+// المحاضرة الثانية
+players[2] = new YT.Player('player_2', {
+    videoId: 'R76qgz_ooMk',
+    playerVars: { controls: 0, rel: 0, modestbranding: 1, iv_load_policy: 3, disablekb: 1 },
+    events: {
+        onReady: function(e) { onPlayerReady(2, e); },
+        onStateChange: function(e) { onPlayerStateChange(2, e); },
+        onError: function(e) { showToast('⚠️ حدث خطأ في الفيديو الثاني'); }
+    }
+});
+// المحاضرة الثالثة (حل الأسئلة)
+players[3] = new YT.Player('player_3', {
+    videoId: 'ru61DG3x2Q4',
+    playerVars: { controls: 0, rel: 0, modestbranding: 1, iv_load_policy: 3, disablekb: 1 },
+    events: {
+        onReady: function(e) { onPlayerReady(3, e); },
+        onStateChange: function(e) { onPlayerStateChange(3, e); },
+        onError: function(e) { showToast('⚠️ حدث خطأ في الفيديو الثالث'); }
+    }
+});
+
+            // ربط الأزرار بعد إنشاء المشغلات
+            bindPlayerControls();
+        };
+
+        function onPlayerReady(id, event) {
+            var state = playerStates[id];
+            state.duration = event.target.getDuration();
+            updateTotalTime(id);
+            // ضبط مستوى الصوت
+            event.target.setVolume(state.volume);
+            document.getElementById('volumeSlider_' + id).value = state.volume;
+            // إزالة الـ loading
+            document.getElementById('loading_' + id).classList.remove('active');
+            // بدء تحديث التقدم
+            startProgressUpdater(id);
+            // عرض رسالة
+            // تم إزالة Toast "الفيديو جاهز"
+        }
+
+        function onPlayerStateChange(id, event) {
+            var state = playerStates[id];
+            var data = event.data;
+            if (data === YT.PlayerState.PLAYING) {
+                state.isPlaying = true;
+                document.getElementById('playBtn_' + id).textContent = '⏸';
+                document.getElementById('loading_' + id).classList.remove('active');
+            } else if (data === YT.PlayerState.PAUSED) {
+                state.isPlaying = false;
+                document.getElementById('playBtn_' + id).textContent = '▶';
+            } else if (data === YT.PlayerState.ENDED) {
+                state.isPlaying = false;
+                document.getElementById('playBtn_' + id).textContent = '▶';
+                document.getElementById('progressFill_' + id).style.width = '100%';
+                // تم إزالة Toast "انتهى الفيديو"
+            } else if (data === YT.PlayerState.BUFFERING) {
+                document.getElementById('loading_' + id).classList.add('active');
+            } else if (data === YT.PlayerState.CUED) {
+                document.getElementById('loading_' + id).classList.remove('active');
+            }
+        }
+function startProgressUpdater(id) {
+    if (progressIntervals[id]) clearInterval(progressIntervals[id]);
+    progressIntervals[id] = setInterval(function() {
+        var player = players[id];
+        if (!player || !player.getCurrentTime) return;
+        var current = player.getCurrentTime();
+        var duration = player.getDuration();
+        if (duration > 0) {
+            var percent = (current / duration) * 100;
+            var fill = document.getElementById('progressFill_' + id);
+            var thumb = document.querySelector('#wrapper_' + id + ' .progress-thumb');
+            var timeEl = document.getElementById('currentTime_' + id);
+            
+            // تحديث الجزء الملون
+            if (fill) fill.style.width = Math.min(percent, 100) + '%';
+            
+            // تحديث موضع الدائرة باستخدام left
+            if (thumb) {
+                thumb.style.left = Math.min(percent, 100) + '%';
+                thumb.style.transform = 'translate(-50%, -50%)';
+            }
+            
+            // تحديث الوقت
+            if (timeEl) timeEl.textContent = formatTime(current);
+            
+            playerStates[id].currentTime = current;
+            playerStates[id].duration = duration;
+        }
+    }, 250);
+}
+
+        function updateTotalTime(id) {
+            var duration = playerStates[id].duration;
+            if (duration) {
+                document.getElementById('totalTime_' + id).textContent = formatTime(duration);
+            }
+        }
+
+        function formatTime(seconds) {
+            if (!seconds || isNaN(seconds)) return '00:00';
+            var mins = Math.floor(seconds / 60);
+            var secs = Math.floor(seconds % 60);
+            return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+        }
+
+        // ============================================================
+        // 2. دوال التحكم لكل مشغل
+        // ============================================================
+        function playVideo(id) {
+            if (players[id]) players[id].playVideo();
+        }
+        function pauseVideo(id) {
+            if (players[id]) players[id].pauseVideo();
+        }
+        function togglePlay(id) {
+            if (playerStates[id].isPlaying) {
+                pauseVideo(id);
+            } else {
+                playVideo(id);
+            }
+        }
+        function seek(id, seconds) {
+            var player = players[id];
+            if (!player) return;
+            var current = player.getCurrentTime();
+            var duration = player.getDuration();
+            var newTime = Math.min(Math.max(current + seconds, 0), duration);
+            player.seekTo(newTime, true);
+            // تم إزالة Toast "تقديم/تأخير"
+        }
+        function changeSpeed(id, rate) {
+            var player = players[id];
+            if (!player) return;
+            player.setPlaybackRate(rate);
+            playerStates[id].speed = rate;
+            document.getElementById('speedBtn_' + id).textContent = rate.toFixed(1) + '×';
+            // تم إزالة Toast "السرعة"
+        }
+        function toggleMute(id) {
+            var player = players[id];
+            if (!player) return;
+            var state = playerStates[id];
+            state.muted = !state.muted;
+            player.setMute(state.muted);
+            document.getElementById('muteBtn_' + id).textContent = state.muted ? '🔇' : '🔊';
+            document.getElementById('volumeSlider_' + id).value = state.muted ? 0 : state.volume;
+            // تم إزالة Toast "كتم الصوت"
+        }
+        function setVolume(id, val) {
+            var player = players[id];
+            var vol = parseInt(val);
+            var state = playerStates[id];
+            state.volume = vol;
+            if (player) {
+                player.setVolume(vol);
+                if (vol === 0) {
+                    state.muted = true;
+                    document.getElementById('muteBtn_' + id).textContent = '🔇';
+                } else {
+                    state.muted = false;
+                    document.getElementById('muteBtn_' + id).textContent = '🔊';
+                    player.unMute();
+                }
+            }
+        }
+        function setZoom(id, level) {
+            var wrapper = document.getElementById('wrapper_' + id);
+            if (!wrapper) return;
+            var newLevel = Math.min(Math.max(level, 0.5), 2.0);
+            playerStates[id].zoom = newLevel;
+            wrapper.style.transform = 'scale(' + newLevel + ')';
+            // تم إزالة Toast "تكبير"
+        }
+        function resetZoom(id) {
+            setZoom(id, 1);
+        }
+        function toggleFullscreen(id) {
+            var wrapper = document.getElementById('wrapper_' + id);
+            if (!wrapper) return;
+            if (!document.fullscreenElement) {
+                var req = wrapper.requestFullscreen || wrapper.webkitRequestFullscreen || wrapper.msRequestFullscreen;
+                if (req) req.call(wrapper);
+            } else {
+                var exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+                if (exit) exit.call(document);
+            }
+        }
+
+// ============================================================
+// دالة bindPlayerControls المعدلة - إصلاح شريط التقدم مثل YouTube
+// ============================================================
+function bindPlayerControls() {
+    for (var i = 1; i <= 3; i++) {
+        (function(id) {
+            var playBtn = document.getElementById('playBtn_' + id);
+            var rewindBtn = document.getElementById('rewindBtn_' + id);
+            var forwardBtn = document.getElementById('forwardBtn_' + id);
+            var speedBtn = document.getElementById('speedBtn_' + id);
+            var muteBtn = document.getElementById('muteBtn_' + id);
+            var volumeSlider = document.getElementById('volumeSlider_' + id);
+            var zoomInBtn = document.getElementById('zoomInBtn_' + id);
+            var zoomOutBtn = document.getElementById('zoomOutBtn_' + id);
+            var resetZoomBtn = document.getElementById('resetZoomBtn_' + id);
+            var fullscreenBtn = document.getElementById('fullscreenBtn_' + id);
+            var progressTrack = document.getElementById('progressTrack_' + id);
+            var progressFill = document.getElementById('progressFill_' + id);
+            var currentTimeEl = document.getElementById('currentTime_' + id);
+            var totalTimeEl = document.getElementById('totalTime_' + id);
+
+            if (playBtn) playBtn.addEventListener('click', function() { togglePlay(id); });
+            if (rewindBtn) rewindBtn.addEventListener('click', function() { seek(id, -5); });
+            if (forwardBtn) forwardBtn.addEventListener('click', function() { seek(id, 5); });
+            if (speedBtn) {
+                speedBtn.addEventListener('click', function() {
+                    var speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
+                    var current = playerStates[id].speed;
+                    var idx = speeds.indexOf(current);
+                    idx = (idx + 1) % speeds.length;
+                    changeSpeed(id, speeds[idx]);
+                });
+            }
+            if (muteBtn) muteBtn.addEventListener('click', function() { toggleMute(id); });
+            if (volumeSlider) {
+                volumeSlider.addEventListener('input', function(e) {
+                    setVolume(id, e.target.value);
+                });
+            }
+            if (zoomInBtn) zoomInBtn.addEventListener('click', function() {
+                setZoom(id, playerStates[id].zoom + 0.15);
+            });
+            if (zoomOutBtn) zoomOutBtn.addEventListener('click', function() {
+                setZoom(id, playerStates[id].zoom - 0.15);
+            });
+            if (resetZoomBtn) resetZoomBtn.addEventListener('click', function() { resetZoom(id); });
+            if (fullscreenBtn) fullscreenBtn.addEventListener('click', function() { toggleFullscreen(id); });
+
+            // ===== شريط التقدم مثل YouTube (دائرة مستقلة + سلس) =====
+            if (progressTrack && progressFill) {
+                // إنشاء الدائرة (Thumb) كعنصر منفصل
+                var thumb = document.createElement('div');
+                thumb.className = 'progress-thumb';
+                thumb.style.cssText = `
+                    position: absolute;
+                    top: 50%;
+                    left: 0%;
+                    transform: translate(-50%, -50%);
+                    width: 18px;
+                    height: 18px;
+                    background: #f97316;
+                    border-radius: 50%;
+                    box-shadow: 0 0 16px rgba(249, 115, 22, 0.6);
+                    z-index: 5;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: opacity 0.15s;
+                `;
+                progressTrack.style.position = 'relative';
+                progressTrack.style.direction = 'ltr'; // اتجاه LTR مثل YouTube
+                progressTrack.style.overflow = 'visible';
+                progressTrack.appendChild(thumb);
+
+                // إظهار الدائرة عند التمرير على الشريط
+                progressTrack.addEventListener('mouseenter', function() {
+                    thumb.style.opacity = '1';
+                });
+                progressTrack.addEventListener('mouseleave', function() {
+                    if (!isDragging) thumb.style.opacity = '0';
+                });
+
+                var isDragging = false;
+                var isHovering = false;
+
+                function getSeekPercent(e) {
+                    var rect = progressTrack.getBoundingClientRect();
+                    var x = (e.clientX - rect.left) / rect.width;
+                    return Math.min(Math.max(x, 0), 1);
+                }
+
+                function getSeekPercentTouch(e) {
+                    var touch = e.touches[0];
+                    var rect = progressTrack.getBoundingClientRect();
+                    var x = (touch.clientX - rect.left) / rect.width;
+                    return Math.min(Math.max(x, 0), 1);
+                }
+
+                function updateSeek(percent) {
+                    var player = players[id];
+                    if (!player) return;
+                    var duration = player.getDuration();
+                    if (!duration) return;
+                    var seekTime = percent * duration;
+                    
+                    // تحديث الجزء الملون
+                    progressFill.style.width = (percent * 100) + '%';
+                    
+                    // تحديث موضع الدائرة باستخدام left
+                    thumb.style.left = (percent * 100) + '%';
+                    thumb.style.transform = 'translate(-50%, -50%)';
+                    
+                    // تحديث الوقت المعروض
+                    if (currentTimeEl) {
+                        currentTimeEl.textContent = formatTime(seekTime);
+                    }
+                }
+
+                function applySeek(percent) {
+                    var player = players[id];
+                    if (!player) return;
+                    var duration = player.getDuration();
+                    if (!duration) return;
+                    var seekTime = percent * duration;
+                    player.seekTo(seekTime, true);
+                }
+
+                // ----- Mouse Events -----
+                progressTrack.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    thumb.style.opacity = '1';
+                    progressTrack.style.cursor = 'grabbing';
+                    
+                    var percent = getSeekPercent(e);
+                    updateSeek(percent);
+                    applySeek(percent);
+                    
+                    // إيقاف التحديث التلقائي
+                    if (progressIntervals[id]) {
+                        clearInterval(progressIntervals[id]);
+                        progressIntervals[id] = null;
+                    }
+                    
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', function(e) {
+                    if (!isDragging) return;
+                    var percent = getSeekPercent(e);
+                    updateSeek(percent);
+                    applySeek(percent); // تحديث الفيديو أثناء السحب
+                });
+
+                document.addEventListener('mouseup', function(e) {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    progressTrack.style.cursor = 'pointer';
+                    
+                    var percent = getSeekPercent(e);
+                    applySeek(percent);
+                    
+                    // إعادة تشغيل التحديث التلقائي
+                    if (!progressIntervals[id]) {
+                        startProgressUpdater(id);
+                    }
+                    
+                    // إخفاء الدائرة إذا لم يكن الماوس فوق الشريط
+                    if (!isHovering) {
+                        thumb.style.opacity = '0';
+                    }
+                });
+
+                // ----- Touch Events (للهواتف) -----
+                progressTrack.addEventListener('touchstart', function(e) {
+                    isDragging = true;
+                    thumb.style.opacity = '1';
+                    
+                    var percent = getSeekPercentTouch(e);
+                    updateSeek(percent);
+                    applySeek(percent);
+                    
+                    if (progressIntervals[id]) {
+                        clearInterval(progressIntervals[id]);
+                        progressIntervals[id] = null;
+                    }
+                    
+                    e.preventDefault();
+                }, { passive: false });
+
+                document.addEventListener('touchmove', function(e) {
+                    if (!isDragging) return;
+                    var percent = getSeekPercentTouch(e);
+                    updateSeek(percent);
+                    applySeek(percent); // تحديث الفيديو أثناء السحب
+                    e.preventDefault();
+                }, { passive: false });
+
+                document.addEventListener('touchend', function(e) {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    
+                    var percent = getSeekPercentTouch(e);
+                    applySeek(percent);
+                    
+                    if (!progressIntervals[id]) {
+                        startProgressUpdater(id);
+                    }
+                    
+                    thumb.style.opacity = '0';
+                });
+
+                // ----- Click (للنقر العادي) -----
+                progressTrack.addEventListener('click', function(e) {
+                    if (isDragging) return;
+                    var percent = getSeekPercent(e);
+                    updateSeek(percent);
+                    applySeek(percent);
+                });
+
+                // تتبع hover للدائرة
+                progressTrack.addEventListener('mouseenter', function() {
+                    isHovering = true;
+                    thumb.style.opacity = '1';
+                });
+                progressTrack.addEventListener('mouseleave', function() {
+                    isHovering = false;
+                    if (!isDragging) {
+                        thumb.style.opacity = '0';
+                    }
+                });
+
+                console.log('✅ شريط التقدم مثل YouTube للمشغل ' + id);
+            }
+        })(i);
+    }
+}
+
+        // ============================================================
+        // 4. الإشعارات (Toast) - تم إزالة معظمها
+        // ============================================================
+        function showToast(message, duration) {
+    duration = duration || 1400;
+    var container = document.getElementById('toastContainer');
+    if (!container) {
+        var div = document.createElement('div');
+        div.id = 'toastContainer';
+        div.className = 'toast-container';
+        div.style.bottom = '20px';
+        div.style.top = 'auto';
+        div.style.left = '50%';
+        div.style.transform = 'translateX(-50%)';
+        div.style.position = 'fixed';
+        div.style.zIndex = '9999';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.alignItems = 'center';
+        div.style.gap = '8px';
+        div.style.pointerEvents = 'none';
+        document.body.appendChild(div);
+        container = div;
+    }
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    toast.style.background = '#22c55e';
+    toast.style.color = '#ffffff';
+    toast.style.border = '1px solid #16a34a';
+    toast.style.boxShadow = '0 8px 30px rgba(34,197,94,0.4)';
+    toast.style.borderRadius = '40px';
+    toast.style.padding = '10px 24px';
+    toast.style.fontSize = '0.95rem';
+    toast.style.fontWeight = '500';
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px) scale(0.95)';
+    toast.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    toast.style.pointerEvents = 'none';
+    toast.style.whiteSpace = 'nowrap';
+    toast.style.direction = 'ltr';
+    container.appendChild(toast);
+    requestAnimationFrame(function() {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0) scale(1)';
+    });
+    setTimeout(function() {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px) scale(0.95)';
+        setTimeout(function() { toast.remove(); }, 400);
+    }, duration);
+}
+// ===== دالة عرض Toast مخصص في منتصف الشاشة =====
+function showCenteredBigToast(message, duration = 2000) {
+    // إزالة أي Toast قديم من هذا النوع
+    var old = document.getElementById('bigCenteredToast');
+    if (old) old.remove();
+
+    var container = document.createElement('div');
+    container.id = 'bigCenteredToast';
+    container.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        background:grin;
+        backdrop-filter: blur(12px);
+        color: #fff;
+        padding: 35px 45px;
+        border-radius: 24px;
+        font-size: 1.3rem;
+        font-weight: 500;
+        border: 2px solid #f97316;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+        z-index: 10000;
+        text-align: center;
+        max-width: 90%;
+        width: auto;
+        min-width: 320px;
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        pointer-events: none;
+        white-space: pre-line;
+        direction: rtl;
+        font-family: 'Cairo', sans-serif;
+        line-height: 2;
+        letter-spacing: 0.5px;
+        border-radius: 30px;
+    `;
+    container.textContent = message;
+    document.body.appendChild(container);
+
+    requestAnimationFrame(() => {
+        container.style.opacity = '1';
+        container.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+
+    setTimeout(() => {
+        container.style.opacity = '0';
+        container.style.transform = 'translate(-50%, -50%) scale(0.9)';
+        setTimeout(() => container.remove(), 400);
+    }, duration);
+}
+
+        // ============================================================
+        // 5. اختصارات لوحة المفاتيح (تؤثر على المشغل الأول)
+        // ============================================================
+        document.addEventListener('keydown', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            var id = 1; // نطبق على المشغل الأول (الأساسي)
+            switch (e.key) {
+                case ' ':
+                case 'Space':
+                    e.preventDefault();
+                    togglePlay(id);
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    seek(id, 5);
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    seek(id, -5);
+                    break;
+                case 'f':
+                case 'F':
+                    e.preventDefault();
+                    toggleFullscreen(id);
+                    break;
+                case 'm':
+                case 'M':
+                    e.preventDefault();
+                    toggleMute(id);
+                    break;
+                case 'r':
+                case 'R':
+                    e.preventDefault();
+                    resetZoom(id);
+                    break;
+            }
+        });
+
+        // ============================================================
+        // 6. كود تفعيل PWA (beforeinstallprompt و installPWA)
+        // ============================================================
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            console.log('✅ PWA installation prompt available');
+        });
+
+        window.installPWA = function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('✅ User accepted the PWA install');
+                        showToast('✅ تم تثبيت التطبيق بنجاح!');
+                    } else {
+                        console.log('❌ User dismissed the PWA install');
+                        showToast('❌ تم إلغاء التثبيت');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                showToast('📱 استخدم قائمة المتصفح لتثبيت التطبيق (انظر التعليمات أدناه)', 4000);
+            }
+        };
+
+        // ربط زر التثبيت
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'installPwaBtn') {
+                window.installPWA();
+            }
+        });
+
+        // تسجيل الـ Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('✅ Service Worker registered'))
+                .catch(err => console.error('❌ Service Worker registration failed:', err));
+        }
+
+        // ============================================================
+        // 7. إصلاح مشكلة لوحة المفاتيح في شات الذكاء الاصطناعي
+        // ============================================================
+        function fixAIChatKeyboard() {
+    const container = document.getElementById('aiChatContainer');
+    if (!container) return;
+
+    // ضبط الارتفاع تلقائياً
+    function setHeight() {
+        if (window.visualViewport) {
+            container.style.height = (window.visualViewport.height) + 'px';
+        } else {
+            container.style.height = window.innerHeight + 'px';
+        }
+    }
+
+    setHeight();
+
+    // الاستماع لتغيرات لوحة المفاتيح
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', function() {
+            setHeight();
+            // تمرير إلى أسفل الرسائل عند ظهور لوحة المفاتيح
+            const messages = document.getElementById('aiChatMessages');
+            if (messages) {
+                setTimeout(() => {
+                    messages.scrollTop = messages.scrollHeight;
+                }, 100);
+            }
+        });
+    }
+
+    // عند النقر على حقل الإدخال
+    const input = document.getElementById('aiChatInput');
+    if (input) {
+        input.addEventListener('focus', function() {
+            setTimeout(() => {
+                const messages = document.getElementById('aiChatMessages');
+                if (messages) {
+                    messages.scrollTop = messages.scrollHeight;
+                }
+                // تأكد من ظهور حقل الإدخال
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        });
+    }
+    
+    // عند فقدان التركيز (إغلاق لوحة المفاتيح)
+    if (input) {
+        input.addEventListener('blur', function() {
+            setTimeout(setHeight, 300);
+        });
+    }
+}
+
+        // ============================================================
+        // 8. ربط الأحداث بعد تحميل الصفحة
+        // ============================================================
+        window.addEventListener('load', function() {
+            // عرض رسالة ترحيب (تم إزالة Toast)
+            setTimeout(function() {
+                // تم إزالة Toast "لو محتاج حاجة"
+            }, 1000);
+        });
+
+        console.log('✅ مشغلات الفيديو جاهزة للتهيئة.');
+    </script>
+
+    <!-- حاوية الإشعارات (تضاف ديناميكياً) -->
+</body>
+</html>
