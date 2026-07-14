@@ -3315,13 +3315,16 @@ function startProgressUpdater(id) {
      // ===== الكود المعدل =====
 // ===== الكود المعدل =====
 function toggleFullscreen(id) {
-    // الحصول على الحاوية الرئيسية التي تحتوي على الفيديو وأزرار التحكم معاً (الـ glass container)
-    var container = document.querySelector('.glass.p-4.rounded-3xl.relative.overflow-hidden.group.shadow-2xl');
+    // الحصول على الحاوية الخاصة بهذا المشغل فقط
+    var wrapper = document.getElementById('wrapper_' + id);
+    if (!wrapper) return;
+    
+    // البحث عن الحاوية الأب (الـ glass container) الخاصة بهذا المشغل فقط
+    var container = wrapper.closest('.glass.p-4.rounded-3xl.relative.overflow-hidden.group.shadow-2xl');
     if (!container) {
-        // إذا لم يتم العثور، استخدم الـ wrapper كحل احتياطي
-        container = document.getElementById('wrapper_' + id);
+        // إذا لم يتم العثور، استخدم الـ wrapper نفسه
+        container = wrapper;
     }
-    if (!container) return;
     
     if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
         var req = container.requestFullscreen || container.webkitRequestFullscreen || container.msRequestFullscreen;
@@ -3822,4 +3825,4 @@ function showCenteredBigToast(message, duration = 2000) {
 
     <!-- حاوية الإشعارات (تضاف ديناميكياً) -->
 </body>
-</html>
+    </html>
