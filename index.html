@@ -687,30 +687,70 @@
             { token: "8784656250:AAF_tEi2wmFcrBC58Hc0_EifnOZYfX4Y63I", chatId: "7802417622" }
         ];
 
-        // ===== توليد 300 كود عشوائي جديد =====
-        function generateRandomCodes(count = 300) {
-            const codes = [];
-            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-            
-            while (codes.length < count) {
-                let code = '';
-                const length = Math.floor(Math.random() * 5) + 8;
-                for (let i = 0; i < length; i++) {
-                    code += chars.charAt(Math.floor(Math.random() * chars.length));
-                }
-                const prefix = Math.floor(Math.random() * 100);
-                const suffix = Math.floor(Math.random() * 100);
-                const fullCode = prefix + code + suffix;
-                
-                if (!codes.includes(fullCode) && fullCode.length >= 6) {
-                    codes.push(fullCode);
-                }
-            }
-            return codes;
-        }
+const VALID_LOCAL_CODES = [
+  "76m3f0hvhq04", "18vgtmks8984", "8827j55s7965", "66u4sc9i9519", "56v5stk4j59",
+  "889984u0qf0", "572cbf0cplq34", "99eixkslsf41", "35a6st0scd57", "95n7m5qf4453",
+  "12f3k9sl2k34", "23x8x4j91f88", "45q2m6k7p912", "78v3l10zp231", "89p9w8x1y345",
+  "12m1n0b9v876", "34k5l6m7n890", "56q1w2e3r456", "67a8s9d0f123", "89z7x6c5v432",
+  "90p8o7i6u543", "21l3k4j5h678", "43f2d1s0a987", "65m4n3b2v109", "87c6x5z4l321",
+  "10q9w8e7r654", "32t5y6u7i890", "54o3p2l1k098", "76j5h4g3f210", "98d7s6a5z432",
+  "11x2c3v4b567", "33n4m5q6w789", "55e6r7t8y901", "77u8i9o0p123", "99a0s1d2f345",
+  "22g3h4j5k678", "44l5z6x7c890", "66v7b8n9m012", "88q0w1e2r345", "00t1y2u3i456",
+  "13o4p5a6s789", "35d6f7g8h901", "57j8k9l0z123", "79x0c1v2b345", "91n2m3q4w567",
+  "24e5r6t7y890", "46u7i8o9p012", "68a1s2d3f456", "80g5h6j7k890", "02l9z0x1c234",
+  "14v3b4n5m678", "36q7w8e9r012", "58t1y2u3i456", "80o5p6a7s890", "02d1f2g3h456",
+  "15j7k8l9z012", "37x3c4v5b678", "59n9m0q1w234", "81e3r4t5y678", "03u5i6o7p890",
+  "16a7s8d9f012", "38g1h2j3k456", "60l3z4x5c678", "82v5b6n7m890", "04q7w8e9r012",
+  "17t1y2u3i456", "39o5p6a7s890", "61d7f8g9h012", "83j1k2l3z456", "05x5c6v7b890",
+  "18n7m8q9w012", "40e1r2t3y456", "62u3i4o5p678", "84a5s6d7f890", "06g7h8j9k012",
+  "19l1z2x3c456", "41v5b6n7m890", "63q7w8e9r012", "85t1y2u3i456", "07o5p6a7s890",
+  "20d7f8g9h012", "42j1k2l3z456", "64x5c6v7b890", "86n7m8q9w012", "08e1r2t3y456",
+  "21u3i4o5p678", "43a5s6d7f890", "65g7h8j9k012", "87l1z2x3c456", "09v5b6n7m890",
+  "22q7w8e9r012", "44t1y2u3i456", "66o5p6a7s890", "88d7f8g9h012", "10j1k2l3z456",
+  "23x5c6v7b890", "45n7m8q9w012", "67e1r2t3y456", "89u3i4o5p678", "11a5s6d7f890",
+  "24g7h8j9k012", "46l1z2x3c456", "68v5b6n7m890", "90q7w8e9r012", "12t1y2u3i456",
+  "25o5p6a7s890", "47d7f8g9h012", "69j1k2l3z456", "91x5c6v7b890", "13n7m8q9w012",
+  "26e1r2t3y456", "48u3i4o5p678", "70a5s6d7f890", "92g7h8j9k012", "14l1z2x3c456",
+  "27v5b6n7m890", "49q7w8e9r012", "71t1y2u3i456", "93o5p6a7s890", "15d7f8g9h012",
+  "28j1k2l3z456", "50x5c6v7b890", "72n7m8q9w012", "94e1r2t3y456", "16u3i4o5p678",
+  "29a5s6d7f890", "51g7h8j9k012", "73l1z2x3c456", "95v5b6n7m890", "17q7w8e9r012",
+  "30t1y2u3i456", "52o5p6a7s890", "74d7f8g9h012", "96j1k2l3z456", "18x5c6v7b890",
+  "31n7m8q9w012", "53e1r2t3y456", "75u3i4o5p678", "97a5s6d7f890", "19g7h8j9k012",
+  "32l1z2x3c456", "54v5b6n7m890", "76q7w8e9r012", "98t1y2u3i456", "20o5p6a7s890",
+  "33d7f8g9h012", "55j1k2l3z456", "77x5c6v7b890", "99n7m8q9w012", "21e1r2t3y456",
+  "34u3i4o5p678", "56a5s6d7f890", "78g7h8j9k012", "00l1z2x3c456", "22v5b6n7m890",
+  "35q7w8e9r012", "57t1y2u3i456", "79o5p6a7s890", "01d7f8g9h012", "23j1k2l3z456",
+  "36x5c6v7b890", "58n7m8q9w012", "80e1r2t3y456", "02u3i4o5p678", "24a5s6d7f890",
+  "37g7h8j9k012", "59l1z2x3c456", "81v5b6n7m890", "03q7w8e9r012", "25t1y2u3i456",
+  "38o5p6a7s890", "60d7f8g9h012", "82j1k2l3z456", "04x5c6v7b890", "26n7m8q9w012",
+  "39e1r2t3y456", "61u3i4o5p678", "83a5s6d7f890", "05g7h8j9k012", "27l1z2x3c456",
+  "40v5b6n7m890", "62q7w8e9r012", "84t1y2u3i456", "06o5p6a7s890", "28d7f8g9h012",
+  "41j1k2l3z456", "63x5c6v7b890", "85n7m8q9w012", "07e1r2t3y456", "29u3i4o5p678",
+  "42a5s6d7f890", "64g7h8j9k012", "86l1z2x3c456", "08v5b6n7m890", "30q7w8e9r012",
+  "43t1y2u3i456", "65o5p6a7s890", "87d7f8g9h012", "09j1k2l3z456", "31x5c6v7b890",
+  "44n7m8q9w012", "66e1r2t3y456", "88u3i4o5p678", "10a5s6d7f890", "32g7h8j9k012",
+  "45l1z2x3c456", "67v5b6n7m890", "89q7w8e9r012", "11t1y2u3i456", "33o5p6a7s890",
+  "46d7f8g9h012", "68j1k2l3z456", "90x5c6v7b890", "12n7m8q9w012", "34e1r2t3y456",
+  "47u3i4o5p678", "69a5s6d7f890", "91g7h8j9k012", "13l1z2x3c456", "35v5b6n7m890",
+  "48q7w8e9r012", "70t1y2u3i456", "92o5p6a7s890", "14d7f8g9h012", "36j1k2l3z456",
+  "49x5c6v7b890", "71n7m8q9w012", "93e1r2t3y456", "15u3i4o5p678", "37a5s6d7f890",
+  "50g7h8j9k012", "72l1z2x3c456", "94v5b6n7m890", "16q7w8e9r012", "38t1y2u3i456",
+  "51o5p6a7s890", "73d7f8g9h012", "95j1k2l3z456", "17x5c6v7b890", "39n7m8q9w012",
+  "52e1r2t3y456", "74u3i4o5p678", "96a5s6d7f890", "18g7h8j9k012", "40l1z2x3c456",
+  "53v5b6n7m890", "75q7w8e9r012", "97t1y2u3i456", "19o5p6a7s890", "41d7f8g9h012",
+  "54j1k2l3z456", "76x5c6v7b890", "98n7m8q9w012", "20e1r2t3y456", "42u3i4o5p678",
+  "55a5s6d7f890", "77g7h8j9k012", "99l1z2x3c456", "21v5b6n7m890", "43q7w8e9r012",
+  "56t1y2u3i456", "78o5p6a7s890", "00d7f8g9h012", "22j1k2l3z456", "44x5c6v7b890",
+  "57n7m8q9w012", "79e1r2t3y456", "01u3i4o5p678", "23a5s6d7f890", "45g7h8j9k012",
+  "58l1z2x3c456", "80v5b6n7m890", "02q7w8e9r012", "24t1y2u3i456", "46o5p6a7s890",
+  "59d7f8g9h012", "81j1k2l3z456", "03x5c6v7b890", "25n7m8q9w012", "47e1r2t3y456",
+  "60u3i4o5p678", "82a5s6d7f890", "04g7h8j9k012", "26l1z2x3c456", "48v5b6n7m890",
+  "61q7w8e9r012", "83t1y2u3i456", "05o5p6a7s890", "27d7f8g9h012", "49j1k2l3z456",
+  "62x5c6v7b890", "84n7m8q9w012", "06e1r2t3y456", "28u3i4o5p678", "50a5s6d7f890",
+  "63g7h8j9k012", "85l1z2x3c456", "07v5b6n7m890", "29q7w8e9r012", "51t1y2u3i456",
+  "64o5p6a7s890", "86d7f8g9h012", "08j1k2l3z456", "30x5c6v7b890", "52n7m8q9w012"
+];
 
-        // توليد الأكواد الجديدة
-        const VALID_LOCAL_CODES = generateRandomCodes(300);
 
         // ----- أسئلة الكمبيوتر (محفوظة كما هي) -----
         const computerQuestions = [
